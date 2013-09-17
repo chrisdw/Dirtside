@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.uk.downesward.dirtside"
+    package="uk.org.downesward.dirtside"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="org.uk.downesward.dirtside.InfantryTeamListActivity"
+            android:name="uk.org.downesward.dirtside.ActivitySelectionActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,13 +23,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.uk.downesward.dirtside.InfantryTeamDetailActivity"
+            android:name="uk.org.downesward.dirtside.InfantryTeamListActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="uk.org.downesward.dirtside.InfantryTeamDetailActivity"
             android:label="@string/title_infantryteam_detail"
-            android:parentActivityName=".InfantryTeamListActivity" >
+            android:parentActivityName="uk.org.downesward.dirtside.InfantryTeamListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".InfantryTeamListActivity" />
         </activity>
+        <activity android:name="uk.org.downesward.dirtside.CombatResolutionActivity"></activity>
     </application>
 
 </manifest>

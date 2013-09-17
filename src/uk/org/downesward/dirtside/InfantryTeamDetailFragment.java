@@ -1,4 +1,4 @@
-package org.uk.downesward.dirtside;
+package uk.org.downesward.dirtside;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.uk.downesward.dirtside.dummy.DummyContent;
+import uk.org.downesward.dirtside.R;
+
+import uk.org.downesward.dirtside.dummy.DummyContent;
 
 /**
  * A fragment representing a single InfantryTeam detail screen. This fragment is

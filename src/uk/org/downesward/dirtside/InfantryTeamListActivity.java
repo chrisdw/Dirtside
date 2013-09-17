@@ -1,4 +1,6 @@
-package org.uk.downesward.dirtside;
+package uk.org.downesward.dirtside;
+
+import uk.org.downesward.dirtside.R;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package org.uk.downesward.dirtside;
+package uk.org.downesward.dirtside;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import org.uk.downesward.dirtside.dummy.DummyContent;
+import uk.org.downesward.dirtside.dummy.DummyContent;
 
 /**
  * A list fragment representing a list of InfantryTeams. This fragment also

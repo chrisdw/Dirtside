@@ -1,4 +1,4 @@
-package org.uk.downesward.dirtside.dummy;
+package uk.org.downesward.dirtside.dummy;
 
 import java.util.ArrayList;
 import java.util.HashMap;

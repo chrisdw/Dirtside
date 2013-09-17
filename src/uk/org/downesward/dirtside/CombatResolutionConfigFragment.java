@@ -1,6 +1,10 @@
-package org.uk.downesward.dirtside;
+package uk.org.downesward.dirtside;
 
 import java.util.ArrayList;
+
+import uk.org.downesward.dirtside.R;
+
+import uk.org.downesward.dirtside.domain.Weapon;
 
 import android.app.Fragment;
 import android.database.Cursor;
@@ -11,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class CombatResolutionResultFragment extends Fragment {
+public class CombatResolutionConfigFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,7 +31,8 @@ public class CombatResolutionResultFragment extends Fragment {
 		ArrayList<String> wpnType = new ArrayList<String>();
 		
 		while (wpn.moveToNext()) {
-			wpnType.add(wpn.getString(0));
+			Weapon aWpn = new Weapon(wpn.getString(0), wpn.getString(1));
+			wpnType.add(aWpn.getName());
 		}
 		Spinner spinner = (Spinner)view.findViewById(R.id.spnWeapon);
 		

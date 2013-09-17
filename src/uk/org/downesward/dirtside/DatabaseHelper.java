@@ -1,4 +1,4 @@
-package org.uk.downesward.dirtside;
+package uk.org.downesward.dirtside;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 	public Cursor getWeapons() {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor res = db.rawQuery(
-				"SELECT WeaponType FROM WeaponType ORDER BY WeaponType", null);
+				"SELECT WeaponType, WeaponSize FROM WeaponTypeSize ORDER BY WeaponType, WeaponSize", null);
 		return res;
 	}
 }
