@@ -1,13 +1,16 @@
 package uk.org.downesward.dirtside;
 
+import java.util.ArrayList;
+
+import uk.org.downesward.dirtside.adapters.InfantryAdapter;
+import uk.org.downesward.dirtside.domain.Infantry;
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import uk.org.downesward.dirtside.dummy.DummyContent;
 
 /**
  * A list fragment representing a list of InfantryTeams. This fragment also
@@ -20,6 +23,8 @@ import uk.org.downesward.dirtside.dummy.DummyContent;
  */
 public class InfantryTeamListFragment extends ListFragment {
 
+	private ArrayList<Infantry> infantryTeams;
+	
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
 	 * activated item position. Only used on tablets.
@@ -70,10 +75,19 @@ public class InfantryTeamListFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// TODO: replace with a real list adapter.
-		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+		DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
+		Cursor teams = dbh.getInfantry();
+		infantryTeams = new ArrayList<Infantry>();
+		
+		while (teams.moveToNext()) {
+			Infantry team = new Infantry();
+			team.setInfantryId(teams.getInt(0));
+			team.setDescription(teams.getString(1));
+			infantryTeams.add(team);
+		}
+		setListAdapter(new InfantryAdapter(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, DummyContent.ITEMS));
+				infantryTeams));
 	}
 
 	@Override
@@ -116,7 +130,7 @@ public class InfantryTeamListFragment extends ListFragment {
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		mCallbacks.onItemSelected(infantryTeams.get(position).getInfantryId().toString());
 	}
 
 	@Override

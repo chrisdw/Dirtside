@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import uk.org.downesward.dirtside.R;
 
+import uk.org.downesward.dirtside.adapters.ArmourAdapter;
 import uk.org.downesward.dirtside.adapters.WeaponAdapter;
+import uk.org.downesward.dirtside.domain.Armour;
 import uk.org.downesward.dirtside.domain.Weapon;
 
 import android.app.Fragment;
@@ -23,8 +25,10 @@ public class CombatResolutionConfigFragment extends Fragment {
 	private ArrayAdapter<Weapon> weaponType;
 	private ArrayAdapter<String> weaponSize;	
 	private ArrayAdapter<String> fireControl;
+	private ArrayAdapter<Armour> armourType;
 	
 	private ArrayList<Weapon> weapons;
+	private ArrayList<Armour> armours;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,14 +41,12 @@ public class CombatResolutionConfigFragment extends Fragment {
 
 		final DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
 		Cursor wpn = dbh.getWeapons();
-		ArrayList<String> wpnType = new ArrayList<String>();
 
 		weapons = new ArrayList<Weapon>();
 		
 		while (wpn.moveToNext()) {
 			Weapon aWpn = new Weapon(wpn.getString(0), wpn.getString(1));
 			weapons.add(aWpn);
-			wpnType.add(aWpn.getLongName());
 		}
 		
 		weaponType = new WeaponAdapter(this.getActivity(), R.layout.weaponlistitem, weapons);
@@ -87,11 +89,10 @@ public class CombatResolutionConfigFragment extends Fragment {
 		
 		// Set up the fire control spinner
 		spinner = (Spinner) view.findViewById(R.id.spnFireControl);
-		
-		ArrayList<String> fireControls = new ArrayList<String>();	
+				ArrayList<String> fireControls = new ArrayList<String>();	
 		
 		Cursor fcs = dbh.getFireControl();
-		while (wpn.moveToNext()) {
+		while (fcs.moveToNext()) {
 			fireControls.add(fcs.getString(0));
 		}
 		
@@ -102,6 +103,22 @@ public class CombatResolutionConfigFragment extends Fragment {
 		// Apply the adapter to the spinner
 		spinner.setAdapter(fireControl);
 		
+		// Set up the armour type
+		spinner = (Spinner) view.findViewById(R.id.spnArmourType);
+		Cursor armour = dbh.getArmour();
+		armours = new ArrayList<Armour>();
+		
+		while (armour.moveToNext()) {
+			Armour anArmour = new Armour();
+			anArmour.setArmourTypeId(armour.getInt(0));
+			anArmour.setDescription(armour.getString(1));
+			anArmour.setFactor(armour.getFloat(1));
+			
+			armours.add(anArmour);
+		}
+		armourType = new ArmourAdapter(this.getActivity(), android.R.layout.simple_spinner_item, armours);
+		// Apply the adapter to the spinner
+		spinner.setAdapter(armourType);
 		return view;
 	}
 }

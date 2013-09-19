@@ -7,4 +7,8 @@
 	<string name="val_infantrylist">List Infantry teams</string>
 	<string name="val_weapon">Weapon</string>
 	<string name="val_firecontrol">Fire Control</string>
+	<string name="val_moving">Moving?</string>
+	<string name="val_infantry">Infantry</string>
+	<string name="val_vehicle">Vehicle</string>
+	<string name="val_armour">Armour</string>
 </resources>

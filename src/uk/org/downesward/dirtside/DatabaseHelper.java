@@ -34,4 +34,25 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 				"SELECT FireControl FROM FireControl ORDER BY Points", null);
 		return res;
 	}
+	
+	public Cursor getArmour() {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db.rawQuery(
+				"SELECT ArmourTypeId, Description, Factor FROM Armour ORDER BY Description", null);
+		return res;
+	}	
+	
+	public Cursor getInfantry() {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db.rawQuery(
+				"SELECT InfantryId, Description FROM Infantry ORDER BY Description", null);
+		return res;
+	}	
+	
+	public Cursor getInfantry(Integer infantryId) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db.rawQuery(
+				"SELECT InfantryId, Description FROM Infantry WHERE InfantryId = ?", new String[] {infantryId.toString()});
+		return res;
+	}	
 }
