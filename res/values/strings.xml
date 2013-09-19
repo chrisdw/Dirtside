@@ -5,4 +5,6 @@
     <string name="title_infantryteam_detail">InfantryTeam Detail</string>
     <string name="val_resolvecombat">Resolve Combat</string>
 	<string name="val_infantrylist">List Infantry teams</string>
+	<string name="val_weapon">Weapon</string>
+	<string name="val_firecontrol">Fire Control</string>
 </resources>

@@ -17,7 +17,21 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 	public Cursor getWeapons() {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor res = db.rawQuery(
-				"SELECT WeaponType, WeaponSize FROM WeaponTypeSize ORDER BY WeaponType, WeaponSize", null);
+				"SELECT WeaponType, Description FROM WeaponType ORDER BY WeaponType", null);
+		return res;
+	}
+	
+	public Cursor getWeaponSizes(String weaponType) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db.rawQuery(
+				"SELECT WeaponSize FROM WeaponTypeSize WHERE WeaponType = ?", new String[] {weaponType});
+		return res;
+	}
+	
+	public Cursor getFireControl() {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db.rawQuery(
+				"SELECT FireControl FROM FireControl ORDER BY Points", null);
 		return res;
 	}
 }

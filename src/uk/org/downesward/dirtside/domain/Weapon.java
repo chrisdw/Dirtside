@@ -3,10 +3,11 @@ package uk.org.downesward.dirtside.domain;
 public class Weapon {
 	private String type;
 	private String size;
+	private String description;
 	
-	public Weapon(String type, String size) {
+	public Weapon(String type, String desription) {
 		this.type = type;
-		this.size = size;
+		this.description = desription;
 	}
 	
 	public String getType() {
@@ -25,8 +26,20 @@ public class Weapon {
 		this.size = size;
 	}
 	
+	public String getLongName() {
+		return this.type +  "(" + this.description + ")";
+	}
+	
 	public String getName() {
 		return this.type + "/" + this.size;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }

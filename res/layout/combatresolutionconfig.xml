@@ -4,9 +4,42 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Spinner
-        android:id="@+id/spnWeapon"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/lblWeapon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/val_weapon" />
+
+        <Spinner
+            android:id="@+id/spnWeapon"
+            android:layout_width="236dp"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/spnWeaponSize"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/lblFireControl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/val_firecontrol" />
+
+        <Spinner
+            android:id="@+id/spnFireControl"
+            android:layout_width="267dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </LinearLayout>
