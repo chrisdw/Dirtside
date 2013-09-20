@@ -7,8 +7,10 @@ import uk.org.downesward.dirtside.R;
 import uk.org.downesward.dirtside.adapters.ArmourAdapter;
 import uk.org.downesward.dirtside.adapters.WeaponAdapter;
 import uk.org.downesward.dirtside.domain.Armour;
+import uk.org.downesward.dirtside.domain.CombatResolutionConfig;
 import uk.org.downesward.dirtside.domain.Weapon;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -27,6 +29,11 @@ import android.widget.Spinner;
 
 public class CombatResolutionConfigFragment extends Fragment {
 
+	public interface ResolveCombat {
+		Integer resolveNormalCombat(CombatResolutionConfig config);
+		void resolveSpillover(CombatResolutionConfig config, Integer range, Integer probability);
+	}
+	
 	private final class WeaponTypeSelectedListner implements
 			OnItemSelectedListener {
 		private final DatabaseHelper dbh;
@@ -109,7 +116,8 @@ public class CombatResolutionConfigFragment extends Fragment {
 	private View mslPanel;
 	private MenuItem spilloverLong;
 	private MenuItem spilloverMedium;
-
+    private ResolveCombat resolver;
+    
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -289,17 +297,41 @@ public class CombatResolutionConfigFragment extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		CombatResolutionConfig config = new CombatResolutionConfig();
+		
 		switch (item.getItemId()) {
 		case R.id.mnu_resolve:
-			// resolve standard
+			// resolve standard (tells us whether to enable spillover)
+			Integer result = resolver.resolveNormalCombat(config);
+			switch (result) {
+			case 1:
+				spilloverMedium.setEnabled(true);
+			case 2:
+				spilloverLong.setEnabled(true);				
+			}
 			return true;
 		case R.id.mnu_spillovermedium:
 			// resolve medium spillover
+			resolver.resolveSpillover(config, 2, 5);
 			return true;
 		case R.id.mnu_spilloverlong:
 			// resolved long range spillover
+			resolver.resolveSpillover(config, 3, 6);
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+
+		// Activities containing this fragment must implement its callbacks.
+		if (!(activity instanceof ResolveCombat)) {
+			throw new IllegalStateException(
+					"Activity must implement fragment's callbacks.");
+		}
+
+		resolver = (ResolveCombat) activity;
 	}
 }
