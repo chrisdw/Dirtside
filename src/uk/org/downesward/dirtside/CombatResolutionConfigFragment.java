@@ -212,7 +212,7 @@ public class CombatResolutionConfigFragment extends Fragment {
 		spinner.setAdapter(targetState);
 
 		// Set up the ECM spinner
-		spinner = (Spinner) view.findViewById(R.id.spnFireControl);
+		spinner = (Spinner) view.findViewById(R.id.spnECM);
 		ArrayList<String> ecmList = new ArrayList<String>();
 
 		Cursor ecms = dbh.getECM();
