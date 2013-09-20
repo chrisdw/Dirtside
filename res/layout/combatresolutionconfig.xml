@@ -48,7 +48,7 @@
         android:text="@string/val_moving" />
 
     <RadioGroup
-        android:id="@+id/radioGroup1"
+        android:id="@+id/rgType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -68,6 +68,7 @@
     </RadioGroup>
 
     <LinearLayout
+        android:id="@+id/pnlArmour"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -86,7 +87,99 @@
             android:id="@+id/spnArmourSize"
             android:layout_width="175dp"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pnlInfantry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/lblInfantru"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/val_htk" />
+
+        <Spinner
+            android:id="@+id/spnHTK"
+            android:layout_width="428dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/lblTargetState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/val_targetstate" />
+
+        <Spinner
+            android:id="@+id/spnTargetState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <TableLayout
+        android:id="@+id/pnlMissiles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TableRow
+            android:id="@+id/tableRowECM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/lblECM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/val_ecm" />
+
+            <Spinner
+                android:id="@+id/spnECM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRowPDS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/lblPDS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/val_pds" />
+
+            <Spinner
+                android:id="@+id/spnPDS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRowADS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/lblADS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/val_ads" />
+
+            <Spinner
+                android:id="@+id/spnADS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>        
+    </TableLayout>
 
 </LinearLayout>

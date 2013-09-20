@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/mnu_resolve" android:title="@string/val_resolvenormal"></item>
+    <item android:id="@+id/mnu_spillovermedium" android:title="@string/val_spillovermedium" android:enabled="false"></item>
+    <item android:id="@+id/mnu_spilloverlong" android:title="@string/val_spilloverlong" android:enabled="false"></item>
+    
+
+</menu>
