@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.NumberPicker;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
@@ -292,6 +293,11 @@ public class CombatResolutionConfigFragment extends Fragment {
 
 		});
 
+		// Constrain range
+		NumberPicker numRange = (NumberPicker)view.findViewById(R.id.numRange);
+		numRange.setMinValue(0);
+		numRange.setMaxValue(100);
+		
 		setHasOptionsMenu(true);
 
 		return view;
@@ -325,6 +331,10 @@ public class CombatResolutionConfigFragment extends Fragment {
 		CheckBox moving = (CheckBox)view.findViewById(R.id.chkMoving);
 		config.setMoving(moving.isChecked());
 
+		// Range
+		NumberPicker range = (NumberPicker)view.findViewById(R.id.numRange);
+		config.setRange(range.getValue());
+		
 		// Infantry Or Vehicle target
 		RadioGroup opt = (RadioGroup) view.findViewById(R.id.rgType);
 		if (opt.getCheckedRadioButtonId() == R.id.rbInfantry) {

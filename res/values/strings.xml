@@ -19,6 +19,7 @@
     <string name="val_ecm">ECM</string>
     <string name="val_pds">PDS</string>
     <string name="val_ads">ADS</string>
+    <string name="val_range">Range</string>
 
     <string-array name="valTargetState">
         <item>In the open</item>

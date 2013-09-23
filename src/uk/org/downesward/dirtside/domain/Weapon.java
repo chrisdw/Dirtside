@@ -1,5 +1,9 @@
 package uk.org.downesward.dirtside.domain;
 
+import android.content.Context;
+import android.database.Cursor;
+import uk.org.downesward.dirtside.DatabaseHelper;
+
 public class Weapon {
 	private String type;
 	private String size;
@@ -40,6 +44,30 @@ public class Weapon {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	/**
+	 * Convert a range in MU's into a range band
+	 * @param range Range in MU's
+	 * @return Range band the range falls in, -1 represents 
+	 * out of range
+	 */
+	public Integer Range(Integer range, Context context) {
+		Integer whichRange = -1;
+		DatabaseHelper dbh = new DatabaseHelper(context);
+		Cursor ranges = dbh.getRanges();
+		int rangeIdCol = ranges.getColumnIndex("RangeId");
+		while (ranges.moveToNext()) {
+			Cursor bands = dbh.getRangeForWeaponTypeRangeBand(this.type, this.size, ranges.getString(rangeIdCol));
+			int rangeCol = bands.getColumnIndex("Range");
+			while (bands.moveToNext()) {
+				if (range <= bands.getInt(rangeCol)) {
+					whichRange = Integer.parseInt(ranges.getString(rangeIdCol));
+					break;
+				}
+			}
+		}
+		return whichRange;
 	}
 	
 }

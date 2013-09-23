@@ -47,25 +47,41 @@
         android:layout_height="wrap_content"
         android:text="@string/val_moving" />
 
-    <RadioGroup
-        android:id="@+id/rgType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-        <RadioButton
-            android:id="@+id/rbInfantry"
+        <RadioGroup
+            android:id="@+id/rgType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/val_infantry" />
+            android:orientation="horizontal" >
 
-        <RadioButton
-            android:id="@+id/rbVehicle"
+            <RadioButton
+                android:id="@+id/rbInfantry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/val_infantry" />
+
+            <RadioButton
+                android:id="@+id/rbVehicle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/val_vehicle" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/lblRange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/val_vehicle" />
-    </RadioGroup>
+            android:text="@string/val_range" />
+        
+        <NumberPicker
+            android:id="@+id/numRange"
+            android:layout_width="wrap_content"
+            android:layout_height="116dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/pnlArmour"
@@ -121,18 +137,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
-        
+
         <TextView
             android:id="@+id/lblTargetSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/val_targetsize" /> 
-            
+            android:text="@string/val_targetsize" />
+
         <Spinner
             android:id="@+id/spnTargetSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />        
+            android:layout_weight="1" />
     </LinearLayout>
 
     <TableLayout
@@ -175,6 +191,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </TableRow>
+
         <TableRow
             android:id="@+id/tableRowADS"
             android:layout_width="wrap_content"
@@ -191,7 +208,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
-        </TableRow>        
+        </TableRow>
     </TableLayout>
 
 </LinearLayout>

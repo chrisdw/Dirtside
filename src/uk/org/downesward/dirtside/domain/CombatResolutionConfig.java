@@ -17,6 +17,8 @@ public class CombatResolutionConfig implements Serializable {
 	private String ecm;
 	private String pds;
 	private String ads;
+	private Integer range;
+	
 	/**
 	 * 
 	 */
@@ -99,6 +101,12 @@ public class CombatResolutionConfig implements Serializable {
 	}
 	public void setAds(String ads) {
 		this.ads = ads;
+	}
+	public Integer getRange() {
+		return range;
+	}
+	public void setRange(Integer range) {
+		this.range = range;
 	}
 
 }
