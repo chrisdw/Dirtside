@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
@@ -298,6 +299,40 @@ public class CombatResolutionConfigFragment extends Fragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		CombatResolutionConfig config = new CombatResolutionConfig();
+		
+		// Create the config object to communicate with the
+		// activity
+		View view = this.getView();
+		
+		// Weapon Type
+		Spinner wpn = (Spinner)view.findViewById(R.id.spnWeapon);
+		config.setWeaponType(((Weapon)wpn.getSelectedItem()).getType());
+		
+		// Weapon Size
+		Spinner siz = (Spinner)view.findViewById(R.id.spnWeaponSize);
+		config.setWeaponSize((String)siz.getSelectedItem());
+
+		// Moving
+		CheckBox moving = (CheckBox)view.findViewById(R.id.chkMoving);
+		config.setMoving(moving.isChecked());
+
+		// Infantry Or Vehicle target
+		RadioGroup opt = (RadioGroup) view.findViewById(R.id.rgType);
+		if (opt.getCheckedRadioButtonId() == R.id.rbInfantry) {
+			config.setInfantry(true);
+		}
+		
+		// Fire Control
+		// Armour Type
+		Spinner armt = (Spinner)view.findViewById(R.id.spnArmourType);
+		config.setArmourTypeId(((Armour)armt.getSelectedItem()).getArmourTypeId());
+		
+		// Armour Size
+		// HTK
+		// Target State
+		// ECM
+		// PDS
+		// ADS
 		
 		switch (item.getItemId()) {
 		case R.id.mnu_resolve:
