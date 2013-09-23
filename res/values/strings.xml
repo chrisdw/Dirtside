@@ -15,6 +15,7 @@
     <string name="val_spillovermedium">Spillover fire (Medium)</string>
     <string name="val_spilloverlong">Resolve Spillover (Long)</string>
     <string name="val_targetstate">Target is</string>
+    <string name="val_targetsize">Size</string>
     <string name="val_ecm">ECM</string>
     <string name="val_pds">PDS</string>
     <string name="val_ads">ADS</string>

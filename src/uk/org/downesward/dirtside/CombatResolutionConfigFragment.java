@@ -108,6 +108,7 @@ public class CombatResolutionConfigFragment extends Fragment {
 	private ArrayAdapter<String> ecm;
 	private ArrayAdapter<CharSequence> pds;
 	private ArrayAdapter<CharSequence> ads;
+	private ArrayAdapter<Integer> targetSize;
 	
 	private ArrayList<Weapon> weapons;
 	private ArrayList<Armour> armours;
@@ -220,6 +221,14 @@ public class CombatResolutionConfigFragment extends Fragment {
 		// Apply the adapter to the spinner
 		spinner.setAdapter(targetState);
 
+		// Set up the target size
+		spinner = (Spinner) view.findViewById(R.id.spnTargetSize);
+		items = new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7 };
+		targetSize = new ArrayAdapter<Integer>(this.getActivity(),
+				android.R.layout.simple_spinner_item, items);
+		// Apply the adapter to the spinner
+		spinner.setAdapter(targetSize);
+		
 		// Set up the ECM spinner
 		spinner = (Spinner) view.findViewById(R.id.spnECM);
 		ArrayList<String> ecmList = new ArrayList<String>();
@@ -323,16 +332,40 @@ public class CombatResolutionConfigFragment extends Fragment {
 		}
 		
 		// Fire Control
+		Spinner fc = (Spinner)view.findViewById(R.id.spnFireControl);
+		config.setFireControl((String)fc.getSelectedItem());
+		
 		// Armour Type
 		Spinner armt = (Spinner)view.findViewById(R.id.spnArmourType);
 		config.setArmourTypeId(((Armour)armt.getSelectedItem()).getArmourTypeId());
 		
-		// Armour Size
+		// Armour Rating
+		Spinner armr = (Spinner)view.findViewById(R.id.spnArmourSize);
+		config.setArmourRating((Integer)armr.getSelectedItem());
+		
 		// HTK
+		Spinner htk = (Spinner)view.findViewById(R.id.spnHTK);
+		config.setHtk((Integer)htk.getSelectedItem());
+		
 		// Target State
+		Spinner tstate = (Spinner)view.findViewById(R.id.spnTargetState);
+		config.setTargetState(tstate.getSelectedItemPosition());
+		
+		// Target Size
+		Spinner tsize = (Spinner)view.findViewById(R.id.spnTargetSize);
+		config.setTargetSize((Integer)tsize.getSelectedItem());
+		
 		// ECM
+		Spinner ecm = (Spinner)view.findViewById(R.id.spnECM);
+		config.setEcm((String)ecm.getSelectedItem());
+		
 		// PDS
+		Spinner pds = (Spinner)view.findViewById(R.id.spnPDS);
+		config.setPds((String)pds.getSelectedItem());
+		
 		// ADS
+		Spinner ads = (Spinner)view.findViewById(R.id.spnADS);
+		config.setAds((String)ads.getSelectedItem());		
 		
 		switch (item.getItemId()) {
 		case R.id.mnu_resolve:
