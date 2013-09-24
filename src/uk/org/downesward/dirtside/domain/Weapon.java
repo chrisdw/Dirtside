@@ -9,6 +9,16 @@ public class Weapon {
 	private String size;
 	private String description;
 	
+	/**
+	 * These weapons have special characteristics, that trigger
+	 * logic flow changes
+	 */
+	public static final String GUIDED_MISSILE = "GMS";
+	public static final String HIGH_VELOCITY_MISSILE = "HVMS";
+	public static final String SLAM = "SLAM";
+	public static final String IAVR = "IAVR";
+	public static final String APSW = "APSW";
+	
 	public Weapon(String type, String desription) {
 		this.type = type;
 		this.description = desription;
@@ -68,6 +78,23 @@ public class Weapon {
 			}
 		}
 		return whichRange;
+	}
+	
+	/**
+	 * Calculate the effective size for pulling chits
+	 * @return
+	 */
+	public Integer effectiveSize() {
+		if (this.type.equals(GUIDED_MISSILE) || this.type.equals(HIGH_VELOCITY_MISSILE)) {
+			if (this.size.equals("L")) {
+				return 3;
+			}
+			else {
+				return 5;
+			}
+		} else {
+			return Integer.parseInt(this.size);
+		}
 	}
 	
 }

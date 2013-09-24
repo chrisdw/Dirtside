@@ -7,6 +7,7 @@ public class CombatResolutionResult implements Serializable {
 	private String outcome;
 	private String dieRolls;
 	private String chits;
+	private Integer state;
 	
 	/**
 	 * 
@@ -30,6 +31,12 @@ public class CombatResolutionResult implements Serializable {
 	}
 	public void setChits(String chits) {
 		this.chits = chits;
+	}
+	public Integer getState() {
+		return state;
+	}
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 }

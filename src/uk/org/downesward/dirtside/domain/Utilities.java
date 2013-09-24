@@ -9,7 +9,7 @@ public class Utilities {
 		String item = null;
 		DatabaseHelper dbh = new DatabaseHelper(context);
 		Cursor res;
-		if (weaponType.equals("GMS")) {
+		if (weaponType.equals(Weapon.GUIDED_MISSILE)) {
 			res = dbh.getDieForGuidance(guidance);
 		}
 		else {

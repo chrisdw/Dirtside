@@ -8,6 +8,7 @@ import uk.org.downesward.dirtside.adapters.ArmourAdapter;
 import uk.org.downesward.dirtside.adapters.WeaponAdapter;
 import uk.org.downesward.dirtside.domain.Armour;
 import uk.org.downesward.dirtside.domain.CombatResolutionConfig;
+import uk.org.downesward.dirtside.domain.CombatResolutionResult;
 import uk.org.downesward.dirtside.domain.Weapon;
 
 import android.app.Activity;
@@ -32,7 +33,7 @@ import android.widget.Spinner;
 public class CombatResolutionConfigFragment extends Fragment {
 
 	public interface ResolveCombat {
-		Integer resolveNormalCombat(CombatResolutionConfig config);
+		CombatResolutionResult resolveNormalCombat(CombatResolutionConfig config);
 		void resolveSpillover(CombatResolutionConfig config, Integer range, Integer probability);
 	}
 	
@@ -56,12 +57,12 @@ public class CombatResolutionConfigFragment extends Fragment {
 			weaponSize.notifyDataSetChanged();
 			
 			if (mslPanel != null) {
-				if (wp.getType().equals("GMS") || wp.getType().equals("HVMS")) {
+				if (wp.getType().equals(Weapon.GUIDED_MISSILE) || wp.getType().equals(Weapon.HIGH_VELOCITY_MISSILE)) {
 					mslPanel.setVisibility(View.VISIBLE);
 					View pds = mslPanel.findViewById(R.id.tableRowPDS);
 					View ads = mslPanel.findViewById(R.id.tableRowADS);
 					if (pds != null && ads != null) {
-						if (wp.getType().equals("HVMS")) {
+						if (wp.getType().equals(Weapon.HIGH_VELOCITY_MISSILE)) {
 							pds.setVisibility(View.GONE);
 							ads.setVisibility(View.GONE);
 						} else {
@@ -74,7 +75,7 @@ public class CombatResolutionConfigFragment extends Fragment {
 					mslPanel.setVisibility(View.GONE);
 				}
 			}
-			if (wp.getType().equals("SLAM")) {
+			if (wp.getType().equals(Weapon.SLAM)) {
 				if (spilloverLong != null) {
 					spilloverLong.setEnabled(true);
 				}
@@ -371,17 +372,17 @@ public class CombatResolutionConfigFragment extends Fragment {
 		
 		// PDS
 		Spinner pds = (Spinner)view.findViewById(R.id.spnPDS);
-		config.setPds((String)pds.getSelectedItem());
+		config.setPds(pds.getSelectedItemPosition());
 		
 		// ADS
 		Spinner ads = (Spinner)view.findViewById(R.id.spnADS);
-		config.setAds((String)ads.getSelectedItem());		
+		config.setAds(ads.getSelectedItemPosition());		
 		
 		switch (item.getItemId()) {
 		case R.id.mnu_resolve:
 			// resolve standard (tells us whether to enable spillover)
-			Integer result = resolver.resolveNormalCombat(config);
-			switch (result) {
+			CombatResolutionResult result = resolver.resolveNormalCombat(config);
+			switch (result.getState()) {
 			case 1:
 				spilloverMedium.setEnabled(true);
 			case 2:

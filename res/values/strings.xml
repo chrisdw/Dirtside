@@ -44,5 +44,14 @@
     </string-array>
 
     <string name="val_htk">Hits to Kill</string>
-
+    
+    <string name="msg_not_capable">Automatic Miss - Firecontrol not capable\n</string>
+    <string name="msg_missiles_cant_shoot_inf">GMS\'s amd HVMS\'s cannot attack infantry\n</string>
+	<string name="msg_attack_result">Attacker D%1$d rolls %2$d\n</string>
+	<string name="msg_out_of_range">*** Out of Range ***\n</string>
+	<string name="msg_ads_result">ADS D%1$d rolls %2$d\n</string>
+	<string name="msg_pds_result">PDS D%1$d rolls %2$d\n</string>
+	<string name="msg_ecm_result">ECM D%1$d rolls %2$d\n</string>	
+	<string name="msg_result_die">D%1$d -vs- D%2$d and D%3$d\n</string>
+	<string name="msg_missed">The attack missed\n</string>
 </resources>
