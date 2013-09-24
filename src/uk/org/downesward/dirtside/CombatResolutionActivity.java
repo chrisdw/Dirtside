@@ -2,6 +2,7 @@ package uk.org.downesward.dirtside;
 
 import uk.org.downesward.dirtside.R;
 import uk.org.downesward.dirtside.domain.CombatResolutionConfig;
+import uk.org.downesward.dirtside.domain.Utilities;
 import uk.org.downesward.dirtside.domain.Weapon;
 
 import android.app.Activity;
@@ -42,6 +43,12 @@ public class CombatResolutionActivity extends Activity implements CombatResoluti
 				whichRange = 1;
 			}
 		}
+		if (whichRange > 0) {
+			if (weaponType == 0) {
+				//  convert the firecon and target levels to dice
+				int fireconDice = fireControlToDice(weapon.getType(), config.getFireControl(), whichRange);
+			}
+		}
 		return 0;
 	}
 
@@ -50,5 +57,15 @@ public class CombatResolutionActivity extends Activity implements CombatResoluti
 			Integer probability) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private int fireControlToDice(String weaponType, String fireContol, Integer range) {
+		int dice = 0;
+		String diceString = Utilities.RangeDie(weaponType, fireContol, fireContol, range, this);
+		
+		if (!diceString.equals("--")) {
+			dice = Integer.parseInt(diceString.substring(1));
+		}
+		return dice;
 	}
 }

@@ -112,4 +112,22 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 						new String[] { weaponType, rangeId });
 		return res;
 	}
+
+	public Cursor getDieForGuidance(String guidance) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db.rawQuery(
+				"SELECT Die FROM MissileGuidance WHERE Guidance = ?",
+				new String[] { guidance });
+		return res;
+	}
+
+	public Cursor getDieForFireControlAndRange(String fireContol,
+			Integer rangeId) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT Die FROM FireControlRange WHERE FireControl = ? AND RangeId = ?",
+						new String[] { fireContol, rangeId.toString() });
+		return res;
+	}
 }
