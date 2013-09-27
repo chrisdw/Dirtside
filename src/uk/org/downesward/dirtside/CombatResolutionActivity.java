@@ -40,23 +40,25 @@ public class CombatResolutionActivity extends Activity implements
 			weaponType = 2;
 		}
 
+		Integer apparentRange;
 		Integer whichRange = weapon.Range(config.getRange(), this);
-		if (whichRange > 0) {
+		apparentRange = whichRange;
+		if (apparentRange > 0) {
 			// High signature targets are treated as being closer
 			if (config.getTargetSize() == 6) {
-				whichRange--;
+				apparentRange--;
 			} else if (config.getTargetSize() == 7) {
-				whichRange -= 2;
+				apparentRange -= 2;
 			}
-			if (whichRange < 1) {
-				whichRange = 1;
+			if (apparentRange < 1) {
+				apparentRange = 1;
 			}
 		}
-		if (whichRange > 0) {
+		if (apparentRange > 0) {
 			if (weaponType == 0) {
 				// convert the firecon and target levels to dice
 				int fireconDice = fireControlToDice(weapon.getType(),
-						config.getFireControl(), whichRange);
+						config.getFireControl(), apparentRange);
 				int targetDice = signatureToDice(config.getTargetSize());
 				if (config.isMoving()) {
 					// The firer moved, drop the dice one level
@@ -72,7 +74,8 @@ public class CombatResolutionActivity extends Activity implements
 					// For normal systems roll the firecon and the secondary die
 					// For GMS roll ADS, PDS and ECM
 					if (weapon.getType().equals(Weapon.GUIDED_MISSILE)
-							|| weapon.getType().equals(Weapon.HIGH_VELOCITY_MISSILE)) {
+							|| weapon.getType().equals(
+									Weapon.HIGH_VELOCITY_MISSILE)) {
 						if (config.isInfantry()) {
 							resultOut
 									.append(res
@@ -135,21 +138,58 @@ public class CombatResolutionActivity extends Activity implements
 						resultOut.append(String.format(
 								res.getString(R.string.msg_result_die),
 								fireconDice, targetDice, secondary));
-						
+
 						// Now do the to hit rolls
+						Dice attackDice = new Dice(fireconDice);
+						Dice defenceDice = new Dice(targetDice);
+						Dice secondaryDice = new Dice(secondary);
+						atkRoll = attackDice.roll();
+						defRoll = defenceDice.roll();
+						Integer secondaryRoll = secondaryDice.roll();
+						resultOut.append(String.format(
+								res.getString(R.string.msg_result), atkRoll,
+								defRoll, secondaryRoll));
+						if (secondaryRoll > defRoll) {
+							defRoll = secondaryRoll;
+						}
+
+						// Work out the valid chits
+						// TODO: Workout the valid chits for the target armour
 					}
 				}
 			} else {
 				// this is for weapons that don't roll to hit (IVAR, APSW)
+				if (config.isInfantry() && weaponType == 1) {
+					resultOut.append(res.getString(R.string.msg_iavr_inf));
+					atkRoll = 0;
+					defRoll = 1;
+				} else {
+					resultOut.append(res.getString(R.string.msg_autohit));
+					atkRoll = 1;
+					defRoll = 0;
+				}
 			}
 			if (atkRoll > defRoll) {
 				// Hit. resolve damage
-				
-			}
-			else {
+				String[] chitList = drawChits(weapon.effectiveSize());
+
+				// If a SLAM has fired and hit spillover fire is allowed
+				if (weapon.getType().equals(Weapon.SLAM)) {
+					// Get the true range, rather than adjusted for size
+					if (whichRange == 2) {
+						result.setState(1);
+						resultOut.append(String.format(
+								res.getString(R.string.msg_spillover), 1));
+					} else if (whichRange == 3) {
+						result.setState(2);
+						resultOut.append(String.format(
+								res.getString(R.string.msg_spillover), 2));
+					}
+				}
+			} else {
 				// Missed
 				resultOut.append(res.getString(R.string.msg_missed));
-			}			
+			}
 		} else {
 			resultOut.append(res.getString(R.string.msg_out_of_range));
 		}
@@ -270,5 +310,20 @@ public class CombatResolutionActivity extends Activity implements
 			die = 0;
 		}
 		return die;
+	}
+
+	private String[] drawChits(Integer weaponSize) {
+		String[] chitsDrawn = new String[weaponSize];
+		Dice dice = new Dice(120);
+
+		for (int chit = 0; chit < weaponSize; chit++) {
+			int roll = dice.roll();
+			if (roll > 0 && roll <= 10) {
+				chitsDrawn[chit] = "R3";
+			} else if (roll > 10 && roll <= 25) {
+				chitsDrawn[chit] = "R2";
+			}
+		}
+		return chitsDrawn;
 	}
 }

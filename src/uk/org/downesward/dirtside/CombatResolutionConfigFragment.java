@@ -385,8 +385,14 @@ public class CombatResolutionConfigFragment extends Fragment {
 			switch (result.getState()) {
 			case 1:
 				spilloverMedium.setEnabled(true);
+				break;
 			case 2:
-				spilloverLong.setEnabled(true);				
+				spilloverLong.setEnabled(true);	
+				break;
+			case 3:
+				spilloverMedium.setEnabled(true);
+				spilloverLong.setEnabled(true);	
+				break;
 			}
 			return true;
 		case R.id.mnu_spillovermedium:

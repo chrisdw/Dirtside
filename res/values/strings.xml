@@ -54,4 +54,8 @@
 	<string name="msg_ecm_result">ECM D%1$d rolls %2$d\n</string>	
 	<string name="msg_result_die">D%1$d -vs- D%2$d and D%3$d\n</string>
 	<string name="msg_missed">The attack missed\n</string>
+	<string name="msg_result">%1$d -vs- %2$d, %3$d\n</string>
+	<string name="msg_iavr_inf">IAVR\'s can not attack infantry\n</string>
+	<string name="msg_autohit">Automatic hit</string>
+	<string name="msg_spillover">Targets within %1$d  mu can be hit by spillover fire\n</string>
 </resources>
