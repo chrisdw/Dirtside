@@ -313,7 +313,7 @@ public class CombatResolutionActivity extends Activity implements
 	}
 
 	private String[] drawChits(Integer weaponSize) {
-		String[] chitsDrawn = new String[weaponSize];
+		String[] chitsDrawn = new String[weaponSize.intValue()];
 		Dice dice = new Dice(120);
 
 		for (int chit = 0; chit < weaponSize; chit++) {
