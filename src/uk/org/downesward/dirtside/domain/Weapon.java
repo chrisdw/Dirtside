@@ -19,6 +19,12 @@ public class Weapon {
 	public static final String IAVR = "IAVR";
 	public static final String APSW = "APSW";
 	
+	public class ChitConfig
+	{
+		public String chits;
+		public Float factor;
+	}
+	
 	public Weapon(String type, String desription) {
 		this.type = type;
 		this.description = desription;
@@ -97,4 +103,17 @@ public class Weapon {
 		}
 	}
 	
+	/**
+	 * Work out which chits are valid when calculating damage using this
+	 * weapon
+	 * @param range
+	 * @param armour
+	 * @param context
+	 * @return
+	 */
+	public ChitConfig validChits(Integer range, Integer armour, Context context) {
+		ChitConfig config = new ChitConfig();
+		// TODO: Add appropriate logic		
+		return config;
+	}
 }

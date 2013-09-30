@@ -14,6 +14,18 @@ import android.os.Bundle;
 
 public class CombatResolutionActivity extends Activity implements
 		CombatResolutionConfigFragment.ResolveCombat {
+	
+	/**
+	 * Returns the results of parsing the chits.
+	 * @author chrisdw
+	 *
+	 */
+	private class ParseResult
+	{
+		public Integer damageDone;
+		public String damageText;
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -29,6 +41,7 @@ public class CombatResolutionActivity extends Activity implements
 		weapon.setSize(config.getWeaponSize());
 		Integer weaponType = 0;
 		StringBuilder resultOut = new StringBuilder();
+		StringBuilder hitResult = new StringBuilder();
 		Resources res = getResources();
 		int atkRoll = 0;
 		int defRoll = 0;
@@ -140,12 +153,20 @@ public class CombatResolutionActivity extends Activity implements
 								fireconDice, targetDice, secondary));
 
 						// Now do the to hit rolls
+						if (targetDice > 0) {
+							Dice defenceDice = new Dice(targetDice);
+							defRoll = defenceDice.roll();
+						}
+						
+						Integer secondaryRoll = 0;
+						if (secondary > 0) {
+							Dice secondaryDice = new Dice(secondary);
+							secondaryRoll = secondaryDice.roll();
+						}
+						
 						Dice attackDice = new Dice(fireconDice);
-						Dice defenceDice = new Dice(targetDice);
-						Dice secondaryDice = new Dice(secondary);
-						atkRoll = attackDice.roll();
-						defRoll = defenceDice.roll();
-						Integer secondaryRoll = secondaryDice.roll();
+						atkRoll = attackDice.roll();					
+						
 						resultOut.append(String.format(
 								res.getString(R.string.msg_result), atkRoll,
 								defRoll, secondaryRoll));
@@ -186,6 +207,36 @@ public class CombatResolutionActivity extends Activity implements
 								res.getString(R.string.msg_spillover), 2));
 					}
 				}
+				if (chitList.length > 0) {
+					Integer armour;
+					Weapon.ChitConfig chitConfig;
+					
+					if (config.isInfantry()) {
+						armour = config.getHtk();
+						chitConfig = weapon.validChits(whichRange, -1, this);
+					} else {
+						armour = config.getArmourRating();
+						chitConfig = weapon.validChits(whichRange, config.getArmourTypeId(), this);
+					}
+					
+					ParseResult chitResult = parseChits(chitList, chitConfig.chits);
+					
+					float totalDamage = chitConfig.factor * chitResult.damageDone;
+					
+					if (chitResult.damageText.contains(res.getString(R.string.chit_b)) && !config.isInfantry()) {
+						hitResult.append(
+								res.getString(R.string.msg_destroyed));
+					} else if (totalDamage > armour) {
+						hitResult.append(
+								res.getString(R.string.msg_destroyed));						
+					} else if (totalDamage == armour) {
+						hitResult.append(
+								res.getString(R.string.msg_damaged));								
+					} else {
+						hitResult.append(
+								res.getString(R.string.msg_no_effect));					
+					}
+				}
 			} else {
 				// Missed
 				resultOut.append(res.getString(R.string.msg_missed));
@@ -204,6 +255,14 @@ public class CombatResolutionActivity extends Activity implements
 
 	}
 
+	/**
+	 * Given a weapon type, fire control and range band work out
+	 * the dice to roll
+	 * @param weaponType
+	 * @param fireContol
+	 * @param range
+	 * @return
+	 */
 	private int fireControlToDice(String weaponType, String fireContol,
 			Integer range) {
 		int dice = 0;
@@ -216,6 +275,11 @@ public class CombatResolutionActivity extends Activity implements
 		return dice;
 	}
 
+	/**
+	 * Convert a signature code into the dice to throw
+	 * @param size the effective size
+	 * @return number of sides on the dice
+	 */
 	private int signatureToDice(Integer size) {
 		int dice = 0;
 		String diceString = "--";
@@ -261,6 +325,11 @@ public class CombatResolutionActivity extends Activity implements
 		return die;
 	}
 
+	/**
+	 * Given an ECM rating, work out the dice to roll
+	 * @param ecmRating
+	 * @return
+	 */
 	private int ECMToDice(String ecmRating) {
 		int die = 0;
 		String diceString = "--";
@@ -312,18 +381,60 @@ public class CombatResolutionActivity extends Activity implements
 		return die;
 	}
 
+	/**
+	 * Draw a number of random chits from the chit pool.
+	 * @param weaponSize
+	 * @return
+	 */
 	private String[] drawChits(Integer weaponSize) {
 		String[] chitsDrawn = new String[weaponSize.intValue()];
 		Dice dice = new Dice(120);
 
 		for (int chit = 0; chit < weaponSize; chit++) {
-			int roll = dice.roll();
+			Integer roll = dice.roll();
 			if (roll > 0 && roll <= 10) {
 				chitsDrawn[chit] = "R3";
 			} else if (roll > 10 && roll <= 25) {
 				chitsDrawn[chit] = "R2";
+			} else if (roll > 25 && roll <= 45) {
+				chitsDrawn[chit] = "R1";
+			} else if (roll > 45 && roll <= 50) {
+				chitsDrawn[chit] = "R0";
+			} else if (roll > 50 && roll <= 55) {
+				chitsDrawn[chit] = "G3";
+			} else if (roll > 55 && roll <= 62) {
+				chitsDrawn[chit] = "G2";
+			} else if (roll > 62 && roll <= 72) {
+				chitsDrawn[chit] = "G1";
+			} else if (roll > 72 && roll <= 75) {
+				chitsDrawn[chit] = "G0";
+			} else if (roll > 75 && roll <= 80) {
+				chitsDrawn[chit] = "Y3";
+			} else if (roll > 80 && roll <= 87) {
+				chitsDrawn[chit] = "Y2";
+			} else if (roll > 87 && roll <= 97) {
+				chitsDrawn[chit] = "Y1";
+			} else if (roll > 97 && roll <= 100) {
+				chitsDrawn[chit] = "Y0";
+			} else if (roll > 100 && roll <= 107) {
+				chitsDrawn[chit] = "MB"; // Mobility
+			} else if (roll > 107 && roll <= 112) {
+				chitsDrawn[chit] = "TD"; // Target systems down
+			} else if (roll > 112 && roll <= 114) {
+				chitsDrawn[chit] = "FD"; // Firer systems down
+			} else if (roll > 114 && roll <= 119) {
+				chitsDrawn[chit] = "B!"; // BOOM
+			} else {
+				chitsDrawn[chit] = "E:" + roll.toString();
 			}
 		}
 		return chitsDrawn;
+	}
+	
+	private ParseResult parseChits(String[] chitsDrawn, String validChits) {
+		ParseResult result = new ParseResult();
+		
+		// TODO: Add appropriate logic
+		return result;
 	}
 }

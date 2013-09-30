@@ -16,8 +16,10 @@ public class Utilities {
 			res = dbh.getDieForFireControlAndRange(fireCon, range);
 		}
 		if (res != null) {
-			int colIndex = res.getColumnIndex("Die");
-			item = res.getString(colIndex);
+			int colIndex = res.getColumnIndexOrThrow("Die");
+			if (res.moveToNext()) {
+				item = res.getString(colIndex);
+			}
 		}
 		return item;
 	}

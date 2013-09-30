@@ -58,4 +58,10 @@
 	<string name="msg_iavr_inf">IAVR\'s can not attack infantry\n</string>
 	<string name="msg_autohit">Automatic hit</string>
 	<string name="msg_spillover">Targets within %1$d  mu can be hit by spillover fire\n</string>
+	
+	<string name="msg_destroyed">Target destroyed</string>
+	<string name="msg_damaged">Target damaged</string>
+	<string name="msg_no_effect">Target un-damaged</string>
+	
+	<string name="chit_b">Boom!</string>
 </resources>
