@@ -4,6 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import uk.org.downesward.dirtside.DatabaseHelper;
 
+/**
+ * Model a weapon by type and size.
+ * @author chrisdw
+ *
+ */
 public class Weapon {
 	private String type;
 	private String size;
@@ -68,7 +73,7 @@ public class Weapon {
 	 * @return Range band the range falls in, -1 represents 
 	 * out of range
 	 */
-	public Integer Range(Integer range, Context context) {
+	public Integer range(Integer range, Context context) {
 		Integer whichRange = -1;
 		DatabaseHelper dbh = new DatabaseHelper(context);
 		Cursor ranges = dbh.getRanges();

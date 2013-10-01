@@ -1,5 +1,11 @@
 package uk.org.downesward.dirtside.domain;
 
+/**
+ * Model an infantry team.
+ * 
+ * @author chrisdw
+ *
+ */
 public class Infantry {
 	private Integer infantryId;
 	private String description;

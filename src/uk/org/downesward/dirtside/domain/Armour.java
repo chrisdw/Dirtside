@@ -1,5 +1,10 @@
 package uk.org.downesward.dirtside.domain;
 
+/**
+ * Model an armour type
+ * @author chrisdw
+ *
+ */
 public class Armour {
 	private int armourTypeId;
 	private String description;

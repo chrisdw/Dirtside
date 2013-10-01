@@ -54,7 +54,7 @@ public class CombatResolutionActivity extends Activity implements
 		}
 
 		Integer apparentRange;
-		Integer whichRange = weapon.Range(config.getRange(), this);
+		Integer whichRange = weapon.range(config.getRange(), this);
 		apparentRange = whichRange;
 		if (apparentRange > 0) {
 			// High signature targets are treated as being closer
