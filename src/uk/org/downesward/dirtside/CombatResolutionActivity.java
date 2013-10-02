@@ -14,18 +14,18 @@ import android.os.Bundle;
 
 public class CombatResolutionActivity extends Activity implements
 		CombatResolutionConfigFragment.ResolveCombat {
-	
+
 	/**
 	 * Returns the results of parsing the chits.
+	 * 
 	 * @author chrisdw
-	 *
+	 * 
 	 */
-	private class ParseResult
-	{
+	private class ParseResult {
 		public Integer damageDone;
 		public String damageText;
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -42,6 +42,7 @@ public class CombatResolutionActivity extends Activity implements
 		Integer weaponType = 0;
 		StringBuilder resultOut = new StringBuilder();
 		StringBuilder hitResult = new StringBuilder();
+		StringBuilder chitsOut = new StringBuilder();
 		Resources res = getResources();
 		int atkRoll = 0;
 		int defRoll = 0;
@@ -157,25 +158,22 @@ public class CombatResolutionActivity extends Activity implements
 							Dice defenceDice = new Dice(targetDice);
 							defRoll = defenceDice.roll();
 						}
-						
+
 						Integer secondaryRoll = 0;
 						if (secondary > 0) {
 							Dice secondaryDice = new Dice(secondary);
 							secondaryRoll = secondaryDice.roll();
 						}
-						
+
 						Dice attackDice = new Dice(fireconDice);
-						atkRoll = attackDice.roll();					
-						
+						atkRoll = attackDice.roll();
+
 						resultOut.append(String.format(
 								res.getString(R.string.msg_result), atkRoll,
 								defRoll, secondaryRoll));
 						if (secondaryRoll > defRoll) {
 							defRoll = secondaryRoll;
 						}
-
-						// Work out the valid chits
-						// TODO: Workout the valid chits for the target armour
 					}
 				}
 			} else {
@@ -210,32 +208,41 @@ public class CombatResolutionActivity extends Activity implements
 				if (chitList.length > 0) {
 					Integer armour;
 					Weapon.ChitConfig chitConfig;
-					
+
 					if (config.isInfantry()) {
 						armour = config.getHtk();
 						chitConfig = weapon.validChits(whichRange, -1, this);
 					} else {
 						armour = config.getArmourRating();
-						chitConfig = weapon.validChits(whichRange, config.getArmourTypeId(), this);
+						chitConfig = weapon.validChits(whichRange,
+								config.getArmourTypeId(), this);
 					}
-					
-					ParseResult chitResult = parseChits(chitList, chitConfig.chits);
-					
-					float totalDamage = chitConfig.factor * chitResult.damageDone;
-					
-					if (chitResult.damageText.contains(res.getString(R.string.chit_b)) && !config.isInfantry()) {
-						hitResult.append(
-								res.getString(R.string.msg_destroyed));
+
+					chitsOut.append(String.format(
+							res.getString(R.string.msg_armour),
+							config.getArmourTypeId(), chitConfig.chits));
+
+					ParseResult chitResult = parseChits(chitList,
+							chitConfig.chits);
+
+					float totalDamage = chitConfig.factor
+							* chitResult.damageDone;
+
+					if (chitResult.damageText.contains(res
+							.getString(R.string.chit_b))
+							&& !config.isInfantry()) {
+						hitResult.append(res.getString(R.string.msg_destroyed));
 					} else if (totalDamage > armour) {
-						hitResult.append(
-								res.getString(R.string.msg_destroyed));						
+						hitResult.append(res.getString(R.string.msg_destroyed));
 					} else if (totalDamage == armour) {
-						hitResult.append(
-								res.getString(R.string.msg_damaged));								
+						hitResult.append(res.getString(R.string.msg_damaged));
 					} else {
-						hitResult.append(
-								res.getString(R.string.msg_no_effect));					
+						hitResult.append(res.getString(R.string.msg_no_effect));
 					}
+
+					hitResult.append(String.format(
+							res.getString(R.string.msg_total_damage),
+							totalDamage, hitResult.toString()));
 				}
 			} else {
 				// Missed
@@ -244,7 +251,9 @@ public class CombatResolutionActivity extends Activity implements
 		} else {
 			resultOut.append(res.getString(R.string.msg_out_of_range));
 		}
-		result.setOutcome(resultOut.toString());
+		result.setChits(chitsOut.toString());
+		result.setOutcome(hitResult.toString());
+		result.setDieRolls(resultOut.toString());
 		return result;
 	}
 
@@ -256,8 +265,9 @@ public class CombatResolutionActivity extends Activity implements
 	}
 
 	/**
-	 * Given a weapon type, fire control and range band work out
-	 * the dice to roll
+	 * Given a weapon type, fire control and range band work out the dice to
+	 * roll
+	 * 
 	 * @param weaponType
 	 * @param fireContol
 	 * @param range
@@ -266,7 +276,7 @@ public class CombatResolutionActivity extends Activity implements
 	private int fireControlToDice(String weaponType, String fireContol,
 			Integer range) {
 		int dice = 0;
-		String diceString = Utilities.RangeDie(weaponType, fireContol,
+		String diceString = Utilities.rangeDie(weaponType, fireContol,
 				fireContol, range, this);
 
 		if (!diceString.equals("--")) {
@@ -277,7 +287,9 @@ public class CombatResolutionActivity extends Activity implements
 
 	/**
 	 * Convert a signature code into the dice to throw
-	 * @param size the effective size
+	 * 
+	 * @param size
+	 *            the effective size
 	 * @return number of sides on the dice
 	 */
 	private int signatureToDice(Integer size) {
@@ -327,6 +339,7 @@ public class CombatResolutionActivity extends Activity implements
 
 	/**
 	 * Given an ECM rating, work out the dice to roll
+	 * 
 	 * @param ecmRating
 	 * @return
 	 */
@@ -383,6 +396,7 @@ public class CombatResolutionActivity extends Activity implements
 
 	/**
 	 * Draw a number of random chits from the chit pool.
+	 * 
 	 * @param weaponSize
 	 * @return
 	 */
@@ -430,11 +444,41 @@ public class CombatResolutionActivity extends Activity implements
 		}
 		return chitsDrawn;
 	}
-	
+
 	private ParseResult parseChits(String[] chitsDrawn, String validChits) {
 		ParseResult result = new ParseResult();
-		
-		// TODO: Add appropriate logic
+		Integer damage = 0;
+		String chitMask = validChits;
+		StringBuilder text = new StringBuilder();
+		;
+		Resources res = getResources();
+
+		if (validChits.equals("ALL")) {
+			chitMask = "RYG";
+		}
+		result.damageDone = 0;
+		result.damageText = "";
+
+		for (int chit = 0; chit < chitsDrawn.length; chit++) {
+			if (chitMask.contains(chitsDrawn[chit].substring(0, 1))) {
+				damage += Integer.parseInt(chitsDrawn[chit].substring(1, 2));
+			}
+			if (chitsDrawn[chit].equals("MB")) {
+				text.append(res.getString(R.string.chit_mb));
+			}
+			if (chitsDrawn[chit].equals("TD")) {
+				text.append(res.getString(R.string.chit_td));
+			}
+			if (chitsDrawn[chit].equals("FD")) {
+				text.append(res.getString(R.string.chit_fd));
+			}
+			if (chitsDrawn[chit].equals("B!")) {
+				text.append(res.getString(R.string.chit_b));
+			}
+		}
+
+		result.damageDone = damage;
+		result.damageText = text.toString();
 		return result;
 	}
 }

@@ -6,35 +6,37 @@ import uk.org.downesward.dirtside.DatabaseHelper;
 
 /**
  * Model a weapon by type and size.
+ * 
  * @author chrisdw
- *
+ * 
  */
 public class Weapon {
 	private String type;
 	private String size;
 	private String description;
-	
+
 	/**
-	 * These weapons have special characteristics, that trigger
-	 * logic flow changes
+	 * These weapons have special characteristics, that trigger logic flow
+	 * changes
 	 */
 	public static final String GUIDED_MISSILE = "GMS";
 	public static final String HIGH_VELOCITY_MISSILE = "HVMS";
 	public static final String SLAM = "SLAM";
 	public static final String IAVR = "IAVR";
 	public static final String APSW = "APSW";
-	
-	public class ChitConfig
-	{
+	public static final String HIGH_ENERGY_LASER = "HEL";
+	public static final String POWER_GUN = "PNG";
+
+	public class ChitConfig {
 		public String chits;
 		public Float factor;
 	}
-	
+
 	public Weapon(String type, String desription) {
 		this.type = type;
 		this.description = desription;
 	}
-	
+
 	public String getType() {
 		return type;
 	}
@@ -50,11 +52,11 @@ public class Weapon {
 	public void setSize(String size) {
 		this.size = size;
 	}
-	
+
 	public String getLongName() {
-		return this.type +  "(" + this.description + ")";
+		return this.type + "(" + this.description + ")";
 	}
-	
+
 	public String getName() {
 		return this.type + "/" + this.size;
 	}
@@ -66,12 +68,13 @@ public class Weapon {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	/**
 	 * Convert a range in MU's into a range band
-	 * @param range Range in MU's
-	 * @return Range band the range falls in, -1 represents 
-	 * out of range
+	 * 
+	 * @param range
+	 *            Range in MU's
+	 * @return Range band the range falls in, -1 represents out of range
 	 */
 	public Integer range(Integer range, Context context) {
 		Integer whichRange = -1;
@@ -79,7 +82,8 @@ public class Weapon {
 		Cursor ranges = dbh.getRanges();
 		int rangeIdCol = ranges.getColumnIndex("RangeId");
 		while (ranges.moveToNext()) {
-			Cursor bands = dbh.getRangeForWeaponTypeRangeBand(this.type, this.size, ranges.getString(rangeIdCol));
+			Cursor bands = dbh.getRangeForWeaponTypeRangeBand(this.type,
+					this.size, ranges.getString(rangeIdCol));
 			int rangeCol = bands.getColumnIndex("Range");
 			while (bands.moveToNext()) {
 				if (range <= bands.getInt(rangeCol)) {
@@ -90,27 +94,28 @@ public class Weapon {
 		}
 		return whichRange;
 	}
-	
+
 	/**
 	 * Calculate the effective size for pulling chits
+	 * 
 	 * @return
 	 */
 	public Integer effectiveSize() {
-		if (this.type.equals(GUIDED_MISSILE) || this.type.equals(HIGH_VELOCITY_MISSILE)) {
+		if (this.type.equals(GUIDED_MISSILE)
+				|| this.type.equals(HIGH_VELOCITY_MISSILE)) {
 			if (this.size.equals("L")) {
 				return 3;
-			}
-			else {
+			} else {
 				return 5;
 			}
 		} else {
 			return Integer.parseInt(this.size);
 		}
 	}
-	
+
 	/**
-	 * Work out which chits are valid when calculating damage using this
-	 * weapon
+	 * Work out which chits are valid when calculating damage using this weapon
+	 * 
 	 * @param range
 	 * @param armour
 	 * @param context
@@ -118,7 +123,67 @@ public class Weapon {
 	 */
 	public ChitConfig validChits(Integer range, Integer armour, Context context) {
 		ChitConfig config = new ChitConfig();
-		// TODO: Add appropriate logic		
+
+		DatabaseHelper dbh = new DatabaseHelper(context);
+		Cursor chits = dbh.getChitsForWeaponTypeRange(this.type,
+				range.toString());
+		if (chits.moveToNext()) {
+			config.chits = this.getChits(chits, armour);
+			if (armour == 4) {
+				// Iridium armour reduces a power gun's factor to 1.0
+				if (this.type.equals(POWER_GUN)) {
+					config.factor = 1.0f;
+				} else {
+					config.factor = chits.getFloat(chits
+							.getColumnIndex("Factor"));
+				}
+			} else {
+				config.factor = chits.getFloat(chits.getColumnIndex("Factor"));
+			}
+		}
 		return config;
+	}
+
+	private String getChits(Cursor chits, Integer armour) {
+		String validChits = "";
+
+		switch (armour) {
+		case -1: // Infantry
+			validChits = Utilities.chitLookup(chits.getInt(chits
+					.getColumnIndex("Infantry")));
+			break;
+		case 1:
+		case 4:
+		case 5:
+			validChits = Utilities.chitLookup(chits.getInt(chits
+					.getColumnIndex("Normal")));
+			break;
+		case 2:
+		case 6:
+			validChits = Utilities.chitLookup(chits.getInt(chits
+					.getColumnIndex("Ablative")));
+			break;
+		case 3:
+			validChits = Utilities.chitLookup(chits.getInt(chits
+					.getColumnIndex("Reactive")));
+			break;
+		case 7:
+			if (this.type.equals(GUIDED_MISSILE)) {
+				validChits = Utilities.chitLookup(chits.getInt(chits
+						.getColumnIndex("Reactive")));
+			} else if (this.type.equals(HIGH_ENERGY_LASER)) {
+				validChits = Utilities.chitLookup(chits.getInt(chits
+						.getColumnIndex("Ablative")));
+			} else {
+				validChits = Utilities.chitLookup(chits.getInt(chits
+						.getColumnIndex("Normal")));
+			}
+			break;
+		default:
+			validChits = Utilities.chitLookup(chits.getInt(chits
+					.getColumnIndex("Normal")));
+			break;
+		}
+		return validChits;
 	}
 }

@@ -10,6 +10,10 @@ import android.database.Cursor;
  *
  */
 public class Utilities {
+	public static final Integer RED = 1;
+	public static final Integer GREEN = 2;
+	public static final Integer YELLOW = 4;
+	
 	/**
 	 * Given a weapon type and a fire control or guidance and a range; work out the dice
 	 * to roll for an attack.
@@ -21,7 +25,7 @@ public class Utilities {
 	 * @param context A context
 	 * @return A string descriptor of the dice - such as D6 or D8 or null.
 	 */
-	public static String RangeDie(String weaponType, String fireCon, String guidance, int range, Context context) {
+	public static String rangeDie(String weaponType, String fireCon, String guidance, int range, Context context) {
 		String item = null;
 		DatabaseHelper dbh = new DatabaseHelper(context);
 		Cursor res;
@@ -38,5 +42,30 @@ public class Utilities {
 			}
 		}
 		return item;
+	}
+	
+	/**
+	 * Convert a bit code represented as an integer into a string
+	 * @param chits
+	 * @return
+	 */
+	public static String chitLookup(Integer chits) {
+		String chitString = "";
+		
+		if (chits == 7) {
+			chitString = "ALL";
+		} else {
+			if ((chits & RED) == RED) {
+				chitString += "R";
+			}
+			if ((chits & GREEN) == GREEN) {
+				chitString += "G";
+			}
+			if ((chits & YELLOW) == YELLOW) {
+				chitString += "Y";
+			}			
+		}
+		
+		return chitString;
 	}
 }
