@@ -41,17 +41,15 @@ public class InfantryTeamDetailFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 
 		if (getArguments().containsKey(ARG_ITEM_ID)) {
-			// Load the dummy content specified by the fragment
-			// arguments. In a real-world scenario, use a Loader
-			// to load content from a content provider.
+
 			Integer infantryId = Integer.parseInt(getArguments().getString(
 					ARG_ITEM_ID));
 			DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
 			Cursor cur = dbh.getInfantry(infantryId);
 			if (cur.moveToNext()) {
 				Infantry inf = new Infantry();
-				inf.setInfantryId(cur.getInt(0));
-				inf.setDescription(cur.getString(1));
+				inf.setInfantryId(cur.getInt(cur.getColumnIndex("InfantryId")));
+				inf.setDescription(cur.getString(cur.getColumnIndex("Description")));
 				mItem = inf;
 			}
 		}
@@ -63,7 +61,6 @@ public class InfantryTeamDetailFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_infantryteam_detail,
 				container, false);
 
-		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
 			((TextView) rootView.findViewById(R.id.infantryteam_detail))
 					.setText(mItem.getDescription());

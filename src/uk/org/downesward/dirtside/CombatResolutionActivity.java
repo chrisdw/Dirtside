@@ -43,10 +43,13 @@ public class CombatResolutionActivity extends Activity implements
 		StringBuilder resultOut = new StringBuilder();
 		StringBuilder hitResult = new StringBuilder();
 		StringBuilder chitsOut = new StringBuilder();
+		StringBuilder dieRolls = new StringBuilder();
 		Resources res = getResources();
 		int atkRoll = 0;
 		int defRoll = 0;
 		CombatResolutionResult result = new CombatResolutionResult();
+		
+		result.setState(0);
 
 		if (weapon.getType().equals(Weapon.IAVR)) {
 			weaponType = 1;
@@ -149,7 +152,7 @@ public class CombatResolutionActivity extends Activity implements
 						}
 					} else {
 						secondary = secondaryToDice(config.getTargetState());
-						resultOut.append(String.format(
+						dieRolls.append(String.format(
 								res.getString(R.string.msg_result_die),
 								fireconDice, targetDice, secondary));
 
@@ -168,7 +171,7 @@ public class CombatResolutionActivity extends Activity implements
 						Dice attackDice = new Dice(fireconDice);
 						atkRoll = attackDice.roll();
 
-						resultOut.append(String.format(
+						dieRolls.append(String.format(
 								res.getString(R.string.msg_result), atkRoll,
 								defRoll, secondaryRoll));
 						if (secondaryRoll > defRoll) {
@@ -225,16 +228,16 @@ public class CombatResolutionActivity extends Activity implements
 					ParseResult chitResult = parseChits(chitList,
 							chitConfig.chits);
 
-					float totalDamage = chitConfig.factor
+					Float totalDamage = chitConfig.factor
 							* chitResult.damageDone;
 
 					if (chitResult.damageText.contains(res
 							.getString(R.string.chit_b))
 							&& !config.isInfantry()) {
 						hitResult.append(res.getString(R.string.msg_destroyed));
-					} else if (totalDamage > armour) {
+					} else if (totalDamage.intValue() > armour) {
 						hitResult.append(res.getString(R.string.msg_destroyed));
-					} else if (totalDamage == armour) {
+					} else if (totalDamage.intValue() == armour) {
 						hitResult.append(res.getString(R.string.msg_damaged));
 					} else {
 						hitResult.append(res.getString(R.string.msg_no_effect));
@@ -242,7 +245,9 @@ public class CombatResolutionActivity extends Activity implements
 
 					hitResult.append(String.format(
 							res.getString(R.string.msg_total_damage),
-							totalDamage, hitResult.toString()));
+							totalDamage.intValue(), hitResult.toString()));
+					
+					resultOut.append(hitResult.toString());
 				}
 			} else {
 				// Missed
@@ -253,7 +258,16 @@ public class CombatResolutionActivity extends Activity implements
 		}
 		result.setChits(chitsOut.toString());
 		result.setOutcome(hitResult.toString());
-		result.setDieRolls(resultOut.toString());
+		result.setDieRolls(dieRolls.toString());
+		
+		// If there is a result fragment about, update it. If
+		CombatResolutionResultFragment frag = (CombatResolutionResultFragment) getFragmentManager()
+				.findFragmentById(R.id.combatresolutionresultfragment);
+		if (frag != null) {
+			frag.setResult(result);
+		} else {
+			
+		}
 		return result;
 	}
 
@@ -445,6 +459,12 @@ public class CombatResolutionActivity extends Activity implements
 		return chitsDrawn;
 	}
 
+	/**
+	 * Given a set of drawn chits, compute the effect.
+	 * @param chitsDrawn The list of chits drawn
+	 * @param validChits The valid chits
+	 * @return Structure representing damage done and any textual results
+	 */
 	private ParseResult parseChits(String[] chitsDrawn, String validChits) {
 		ParseResult result = new ParseResult();
 		Integer damage = 0;

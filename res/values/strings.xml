@@ -69,4 +69,7 @@
 	<string name="chit_fd">Firer Systems Down</string>
 	<string name="chit_td">Target Systems Down</string>
 	<string name="chit_mb">Mobility</string>
+	<string name="val_messages">Messages</string>
+	<string name="val_die_rolls">Die Rolls</string>
+	<string name="val_results">Results</string>
 </resources>
