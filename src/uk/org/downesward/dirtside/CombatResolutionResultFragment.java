@@ -54,7 +54,7 @@ public class CombatResolutionResultFragment extends Fragment {
 	
 	public void setResult(CombatResolutionResult result) {
 		this.result = result;
-		View view = this.getActivity().findViewById(R.id.panCombatResult);
+		View view = this.getView();
 		displayResult(view);
 	}
 }
