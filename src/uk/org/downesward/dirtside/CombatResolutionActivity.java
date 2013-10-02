@@ -245,9 +245,12 @@ public class CombatResolutionActivity extends Activity implements
 
 					hitResult.append(String.format(
 							res.getString(R.string.msg_total_damage),
-							totalDamage.intValue(), hitResult.toString()));
+							totalDamage.intValue(), chitResult.damageText));
 					
 					resultOut.append(hitResult.toString());
+					for (int i = 0; i < chitList.length; i++) {
+						resultOut.append(chitList[i]);
+					}
 				}
 			} else {
 				// Missed
@@ -257,7 +260,7 @@ public class CombatResolutionActivity extends Activity implements
 			resultOut.append(res.getString(R.string.msg_out_of_range));
 		}
 		result.setChits(chitsOut.toString());
-		result.setOutcome(hitResult.toString());
+		result.setOutcome(resultOut.toString());
 		result.setDieRolls(dieRolls.toString());
 		
 		// If there is a result fragment about, update it. If
