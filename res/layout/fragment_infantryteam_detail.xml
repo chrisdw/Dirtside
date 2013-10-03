@@ -1,4 +1,4 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/infantryteam_detail"
     style="?android:attr/textAppearanceLarge"
@@ -6,5 +6,22 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:textIsSelectable="true"
-    tools:context=".InfantryTeamDetailFragment" />
+    tools:context=".InfantryTeamDetailFragment" >
 
+    <Spinner
+        android:id="@+id/spnCampaign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/spnNationality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+    <TextView
+        android:id="@+id/txtInfantryDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" />
+    
+</FrameLayout>

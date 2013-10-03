@@ -47,7 +47,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 						null);
 		return res;
 	}
-	
+
 	public Cursor getArmour(Integer armourTypeId) {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor res = db
@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 						"SELECT ArmourTypeId, Description, Factor, ShortCode, Biological FROM Armour WHERE ArmourTypeId = ?",
 						new String[] { armourTypeId.toString() });
 		return res;
-	}	
+	}
 
 	public Cursor getInfantry() {
 		SQLiteDatabase db = getReadableDatabase();
@@ -70,7 +70,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor res = db
 				.rawQuery(
-						"SELECT InfantryId, Description FROM Infantry WHERE InfantryId = ?",
+						"SELECT InfantryId, Description, Size, CampaignId, Nationality FROM Infantry WHERE InfantryId = ?",
 						new String[] { infantryId.toString() });
 		return res;
 	}
@@ -137,6 +137,33 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 				.rawQuery(
 						"SELECT Die FROM FireControlRange WHERE FireControl = ? AND RangeId = ?",
 						new String[] { fireContol, rangeId.toString() });
+		return res;
+	}
+
+	public Cursor getSizeDetails(Integer unitSizeId) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT Symbol, Description FROM UnitSizes WHERE UnitSizeId = ?",
+						new String[] { unitSizeId.toString() });
+		return res;
+	}
+
+	public Cursor getCampaigns() {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT CampaignId, Description, Notes FROM Campaign ORDER BY Description",
+						null);
+		return res;
+	}
+
+	public Cursor getNationalities() {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT NationalityId, Description FROM Nationality ORDER BY Description",
+						null);
 		return res;
 	}
 }

@@ -1,5 +1,7 @@
 package uk.org.downesward.dirtside.domain;
 
+import android.database.Cursor;
+
 /**
  * Model an infantry team.
  * 
@@ -9,6 +11,38 @@ package uk.org.downesward.dirtside.domain;
 public class Infantry {
 	private Integer infantryId;
 	private String description;
+	private Integer size;
+	private Integer campaignId;
+	private Integer nationalityId;
+	
+	public Infantry() {
+	}
+	
+	public Infantry(Cursor cursor) {
+		int columnIndex;
+		
+		columnIndex = cursor.getColumnIndex("InfantryId");
+		if (columnIndex != -1) {
+			setInfantryId(cursor.getInt(columnIndex));			
+		}
+		columnIndex = cursor.getColumnIndex("Description");
+		if (columnIndex != -1) {
+			setDescription(cursor.getString(columnIndex));			
+		}
+		columnIndex = cursor.getColumnIndex("Size");
+		if (columnIndex != -1) {
+			setSize(cursor.getInt(columnIndex));			
+		}
+		columnIndex = cursor.getColumnIndex("CampaignId");
+		if (columnIndex != -1) {
+			setCampaignId(cursor.getInt(columnIndex));			
+		}
+		// Annoying DB inconsistency
+		columnIndex = cursor.getColumnIndex("Nationality");
+		if (columnIndex != -1) {
+			setNationalityId(cursor.getInt(columnIndex));			
+		}			
+	}
 	
 	public Integer getInfantryId() {
 		return infantryId;
@@ -21,6 +55,28 @@ public class Infantry {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Integer getSize() {
+		return size;
+	}
+	public void setSize(Integer size) {
+		this.size = size;
+	}
+
+	public Integer getCampaignId() {
+		return campaignId;
+	}
+
+	public void setCampaignId(Integer campaignId) {
+		this.campaignId = campaignId;
+	}
+
+	public Integer getNationalityId() {
+		return nationalityId;
+	}
+
+	public void setNationalityId(Integer nationalityId) {
+		this.nationalityId = nationalityId;
 	}
 	
 }
