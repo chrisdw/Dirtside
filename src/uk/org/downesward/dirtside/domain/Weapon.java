@@ -14,7 +14,10 @@ public class Weapon {
 	private String type;
 	private String size;
 	private String description;
-
+	private boolean energyUsing;
+	private Integer points;
+	private boolean biological;
+	
 	/**
 	 * These weapons have special characteristics, that trigger logic flow
 	 * changes
@@ -32,6 +35,34 @@ public class Weapon {
 		public Float factor;
 	}
 
+	public Weapon(Cursor cursor) {
+		int colIndex;
+		colIndex = cursor.getColumnIndex("WeaponType");
+		if (colIndex != -1) {
+			this.setType(cursor.getString(colIndex));
+		}
+		colIndex = cursor.getColumnIndex("WeaponSize");
+		if (colIndex != -1) {
+			this.setSize(cursor.getString(colIndex));
+		}			
+		colIndex = cursor.getColumnIndex("Description");
+		if (colIndex != -1) {
+			this.setDescription(cursor.getString(colIndex));
+		}
+		colIndex = cursor.getColumnIndex("Biological");
+		if (colIndex != -1) {
+			this.setBiological(cursor.getInt(colIndex) == 1);
+		}
+		colIndex = cursor.getColumnIndex("EnergyUsing");
+		if (colIndex != -1) {
+			this.setEnergyUsing(cursor.getInt(colIndex) == 1);
+		}
+		colIndex = cursor.getColumnIndex("Points");
+		if (colIndex != -1) {
+			this.setPoints(cursor.getInt(colIndex));
+		}		
+	}
+	
 	public Weapon(String type, String desription) {
 		this.type = type;
 		this.description = desription;
@@ -67,6 +98,30 @@ public class Weapon {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public boolean isEnergyUsing() {
+		return energyUsing;
+	}
+
+	public void setEnergyUsing(boolean energyUsing) {
+		this.energyUsing = energyUsing;
+	}
+
+	public Integer getPoints() {
+		return points;
+	}
+
+	public void setPoints(Integer points) {
+		this.points = points;
+	}
+
+	public boolean isBiological() {
+		return biological;
+	}
+
+	public void setBiological(boolean biological) {
+		this.biological = biological;
 	}
 
 	/**

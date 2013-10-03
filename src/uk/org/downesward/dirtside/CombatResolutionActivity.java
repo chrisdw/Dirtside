@@ -1,6 +1,7 @@
 package uk.org.downesward.dirtside;
 
 import uk.org.downesward.dirtside.R;
+import uk.org.downesward.dirtside.domain.Armour;
 import uk.org.downesward.dirtside.domain.CombatResolutionConfig;
 import uk.org.downesward.dirtside.domain.CombatResolutionResult;
 import uk.org.downesward.dirtside.domain.Utilities;
@@ -119,7 +120,7 @@ public class CombatResolutionActivity extends Activity implements
 									resultOut
 											.append(String.format(
 													res.getString(R.string.msg_ads_result),
-													defenceDie, secondaryRoll));
+													defenceDie.getSides(), secondaryRoll));
 									if (secondaryRoll > defRoll) {
 										defRoll = secondaryRoll;
 									}
@@ -131,7 +132,7 @@ public class CombatResolutionActivity extends Activity implements
 									resultOut
 											.append(String.format(
 													res.getString(R.string.msg_pds_result),
-													defenceDie, secondaryRoll));
+													defenceDie.getSides(), secondaryRoll));
 									if (secondaryRoll > defRoll) {
 										defRoll = secondaryRoll;
 									}
@@ -144,7 +145,7 @@ public class CombatResolutionActivity extends Activity implements
 								secondaryRoll = defenceDie.roll();
 								resultOut.append(String.format(
 										res.getString(R.string.msg_ecm_result),
-										defenceDie, secondaryRoll));
+										defenceDie.getSides(), secondaryRoll));
 								if (secondaryRoll > defRoll) {
 									defRoll = secondaryRoll;
 								}
@@ -221,9 +222,20 @@ public class CombatResolutionActivity extends Activity implements
 								config.getArmourTypeId(), this);
 					}
 
-					chitsOut.append(String.format(
-							res.getString(R.string.msg_armour),
-							config.getArmourTypeId(), chitConfig.chits));
+					Armour theArmour;
+					DatabaseHelper dbh = new DatabaseHelper(this);
+					Cursor anArmour = dbh.getArmour(config.getArmourTypeId());
+					if (anArmour.moveToNext()) {
+						theArmour = new Armour(anArmour);
+						chitsOut.append(String.format(
+								res.getString(R.string.msg_armour),
+								theArmour.getDescription(), chitConfig.chits));						
+					}
+					else {
+						chitsOut.append(String.format(
+								res.getString(R.string.msg_armour),
+								config.getArmourTypeId().toString(), chitConfig.chits));
+					}
 
 					ParseResult chitResult = parseChits(chitList,
 							chitConfig.chits);
@@ -296,7 +308,7 @@ public class CombatResolutionActivity extends Activity implements
 		String diceString = Utilities.rangeDie(weaponType, fireContol,
 				fireContol, range, this);
 
-		if (!diceString.equals("--")) {
+		if (diceString != null && !diceString.equals("--")) {
 			dice = Integer.parseInt(diceString.substring(1));
 		}
 		return dice;

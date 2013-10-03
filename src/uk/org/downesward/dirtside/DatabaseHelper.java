@@ -47,6 +47,15 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 						null);
 		return res;
 	}
+	
+	public Cursor getArmour(Integer armourTypeId) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT ArmourTypeId, Description, Factor, ShortCode, Biological FROM Armour WHERE ArmourTypeId = ?",
+						new String[] { armourTypeId.toString() });
+		return res;
+	}	
 
 	public Cursor getInfantry() {
 		SQLiteDatabase db = getReadableDatabase();

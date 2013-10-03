@@ -7,7 +7,7 @@ public class CombatResolutionConfig implements Serializable {
 	private String weaponType;
 	private String weaponSize;
 	private boolean moving;
-	private int armourTypeId;
+	private Integer armourTypeId;
 	private boolean infantry;
 	private String fireControl;
 	private Integer armourRating;
@@ -42,10 +42,10 @@ public class CombatResolutionConfig implements Serializable {
 	public void setWeaponSize(String weaponSize) {
 		this.weaponSize = weaponSize;
 	}
-	public int getArmourTypeId() {
+	public Integer getArmourTypeId() {
 		return armourTypeId;
 	}
-	public void setArmourTypeId(int armourTypeId) {
+	public void setArmourTypeId(Integer armourTypeId) {
 		this.armourTypeId = armourTypeId;
 	}
 	public boolean isInfantry() {

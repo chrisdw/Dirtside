@@ -137,7 +137,7 @@ public class CombatResolutionConfigFragment extends Fragment {
 		weapons = new ArrayList<Weapon>();
 
 		while (wpn.moveToNext()) {
-			Weapon aWpn = new Weapon(wpn.getString(0), wpn.getString(1));
+			Weapon aWpn = new Weapon(wpn);
 			weapons.add(aWpn);
 		}
 
@@ -183,11 +183,7 @@ public class CombatResolutionConfigFragment extends Fragment {
 		armours = new ArrayList<Armour>();
 
 		while (armour.moveToNext()) {
-			Armour anArmour = new Armour();
-			anArmour.setArmourTypeId(armour.getInt(0));
-			anArmour.setDescription(armour.getString(1));
-			anArmour.setFactor(armour.getFloat(1));
-
+			Armour anArmour = new Armour(armour);
 			armours.add(anArmour);
 		}
 		armourType = new ArmourAdapter(this.getActivity(),
