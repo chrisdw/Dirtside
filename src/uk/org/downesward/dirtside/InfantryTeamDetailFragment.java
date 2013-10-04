@@ -103,7 +103,7 @@ public class InfantryTeamDetailFragment extends Fragment {
 			spinner.setSelection(spinnerPosition);
 			
 			// Nationality
-			Cursor nationalities = dbh.getNationalities();
+			Cursor nationalities = dbh.getNationalitiesForCampaign(mItem.getCampaignId());
 			ArrayList<Nationality> mNationalities = new ArrayList<Nationality>();
 			Nationality thisNationality = null;		
 					

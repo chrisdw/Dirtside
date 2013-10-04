@@ -166,4 +166,13 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 						null);
 		return res;
 	}
+
+	public Cursor getNationalitiesForCampaign(Integer campaignId) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT Nationality.NationalityId, Nationality.Description, CampaignNationalty.Notes FROM Nationality INNER JOIN CampaignNationalty ON (Nationality.NationalityId = CampaignNationalty.NationalityId) WHERE CampaignNationalty.CampaignId = ? ORDER BY Description",
+						new String[] { campaignId.toString() });
+		return res;
+	}
 }
