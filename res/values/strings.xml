@@ -74,4 +74,6 @@
 	<string name="val_results">Results</string>
 	<string name="val_notes">Notes</string>
 	<string name="val_description">Description</string>
+	<string name="val_cost">Cost</string>
+	<string name="val_personnel_count">Personnel Count</string>
 </resources>

@@ -70,7 +70,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor res = db
 				.rawQuery(
-						"SELECT InfantryId, Description, Size, CampaignId, Nationality, Notes FROM Infantry WHERE InfantryId = ?",
+						"SELECT InfantryId, Description, Size, CampaignId, Nationality, Notes, PersonnelCount, Cost FROM Infantry WHERE InfantryId = ?",
 						new String[] { infantryId.toString() });
 		return res;
 	}

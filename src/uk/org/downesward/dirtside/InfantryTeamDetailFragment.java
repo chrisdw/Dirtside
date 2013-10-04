@@ -73,6 +73,12 @@ public class InfantryTeamDetailFragment extends Fragment {
 			((TextView) rootView.findViewById(R.id.txtInfantryNotes))
 			.setText(mItem.getNotes());
 			
+			((TextView) rootView.findViewById(R.id.txtInfantryCost))
+			.setText(mItem.getCost().toString());
+			
+			((TextView) rootView.findViewById(R.id.txtInfantryPersonnelCount))
+			.setText(mItem.getPersonnelCount().toString());			
+			
 			DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
 			
 			// Campaigns

@@ -15,7 +15,9 @@ public class Infantry {
 	private Integer campaignId;
 	private Integer nationalityId;
 	private String notes;
-
+    private float cost;
+    private Integer personnelCount;
+    
 	public Infantry() {
 	}
 
@@ -51,6 +53,14 @@ public class Infantry {
 		} else {
 			setNotes("");
 		}
+		columnIndex = cursor.getColumnIndex("Cost");
+		if (columnIndex != -1) {
+			setCost(cursor.getFloat(columnIndex));
+		}
+		columnIndex = cursor.getColumnIndex("PersonnelCount");
+		if (columnIndex != -1) {
+			setPersonnelCount(cursor.getInt(columnIndex));
+		}		
 	}
 
 	public Integer getInfantryId() {
@@ -99,6 +109,22 @@ public class Infantry {
 
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+
+	public Float getCost() {
+		return cost;
+	}
+
+	public void setCost(Float cost) {
+		this.cost = cost;
+	}
+
+	public Integer getPersonnelCount() {
+		return personnelCount;
+	}
+
+	public void setPersonnelCount(Integer personnelCount) {
+		this.personnelCount = personnelCount;
 	}
 
 }
