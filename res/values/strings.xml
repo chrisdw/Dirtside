@@ -72,4 +72,6 @@
 	<string name="val_messages">Messages</string>
 	<string name="val_die_rolls">Die Rolls</string>
 	<string name="val_results">Results</string>
+	<string name="val_notes">Notes</string>
+	<string name="val_description">Description</string>
 </resources>
