@@ -68,7 +68,32 @@
             android:id="@+id/txtInfantryPersonnelCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />         
+            android:text="" />     
+            
+        <Spinner
+            android:id="@+id/spnInfantryMovement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />     
+            
+	    <CheckBox
+	        android:id="@+id/chkIAVR"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/val_IAVR" />   
+	    	                         
+	    <CheckBox
+	        android:id="@+id/chkFlying"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/val_flying" />           
+	    	                         
+	    <CheckBox
+	        android:id="@+id/chkBiological"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/val_biological" /> 	    
     </LinearLayout>
+
+
 
 </FrameLayout>

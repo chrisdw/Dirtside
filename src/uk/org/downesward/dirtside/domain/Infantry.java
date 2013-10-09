@@ -17,6 +17,14 @@ public class Infantry {
 	private String notes;
     private float cost;
     private Integer personnelCount;
+    private boolean artilleryObserver;
+    private boolean engineering;
+    private boolean flying;
+    private boolean teleport;
+    private boolean iavr;
+    private boolean lad;
+    private boolean biological;
+    private int infantryMovementId;
     
 	public Infantry() {
 	}
@@ -60,6 +68,38 @@ public class Infantry {
 		columnIndex = cursor.getColumnIndex("PersonnelCount");
 		if (columnIndex != -1) {
 			setPersonnelCount(cursor.getInt(columnIndex));
+		}
+		columnIndex = cursor.getColumnIndex("ArtilleryObserver");
+		if (columnIndex != -1) {
+			setArtilleryObserver(cursor.getInt(columnIndex)==1);
+		}
+		columnIndex = cursor.getColumnIndex("Flying");
+		if (columnIndex != -1) {
+			setFlying(cursor.getInt(columnIndex)==1);
+		}
+		columnIndex = cursor.getColumnIndex("Engineering");
+		if (columnIndex != -1) {
+			setEngineering(cursor.getInt(columnIndex)==1);
+		}
+		columnIndex = cursor.getColumnIndex("Teleport");
+		if (columnIndex != -1) {
+			setTeleport(cursor.getInt(columnIndex)==1);
+		}	
+		columnIndex = cursor.getColumnIndex("LAD");
+		if (columnIndex != -1) {
+			setLAD(cursor.getInt(columnIndex)==1);
+		}
+		columnIndex = cursor.getColumnIndex("IAVR");
+		if (columnIndex != -1) {
+			setIAVR(cursor.getInt(columnIndex)==1);
+		}
+		columnIndex = cursor.getColumnIndex("Biological");
+		if (columnIndex != -1) {
+			setBiological(cursor.getInt(columnIndex)==1);
+		}	
+		columnIndex = cursor.getColumnIndex("InfantryMovementId");
+		if (columnIndex != -1) {
+			setInfantryMovementId(cursor.getInt(columnIndex));
 		}		
 	}
 
@@ -127,4 +167,65 @@ public class Infantry {
 		this.personnelCount = personnelCount;
 	}
 
+	public boolean isArtilleryObserver() {
+		return artilleryObserver;
+	}
+
+	public void setArtilleryObserver(boolean artilleryObserver) {
+		this.artilleryObserver = artilleryObserver;
+	}
+
+	public boolean isEngineering() {
+		return engineering;
+	}
+
+	public void setEngineering(boolean engineering) {
+		this.engineering = engineering;
+	}
+
+	public boolean isFlying() {
+		return flying;
+	}
+
+	public void setFlying(boolean flying) {
+		this.flying = flying;
+	}
+
+	public boolean isTeleport() {
+		return teleport;
+	}
+
+	public void setTeleport(boolean teleport) {
+		this.teleport = teleport;
+	}
+
+	public boolean isIAVR() {
+		return iavr;
+	}
+
+	public void setIAVR(boolean iavr) {
+		this.iavr = iavr;
+	}
+
+	public boolean isLAD() {
+		return lad;
+	}
+
+	public void setLAD(boolean lad) {
+		this.lad = lad;
+	}
+
+	public boolean isBiological() {
+		return biological;
+	}
+
+	public void setBiological(boolean biological) {
+		this.biological = biological;
+	}
+	public Integer getInfantryMovementId() {
+		return infantryMovementId;
+	}
+	public void setInfantryMovementId(Integer infantryMovementId) {
+		this.infantryMovementId = infantryMovementId;
+	}
 }

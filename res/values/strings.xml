@@ -76,4 +76,7 @@
 	<string name="val_description">Description</string>
 	<string name="val_cost">Cost</string>
 	<string name="val_personnel_count">Personnel Count</string>
+	<string name="val_IAVR">IAVR</string>
+	<string name="val_flying">Flying</string>
+	<string name="val_biological">Biological</string>
 </resources>

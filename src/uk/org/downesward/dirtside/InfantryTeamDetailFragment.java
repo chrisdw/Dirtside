@@ -10,13 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.CheckBox;
 
 import uk.org.downesward.dirtside.R;
 
 import uk.org.downesward.dirtside.adapters.CampaignAdapter;
+import uk.org.downesward.dirtside.adapters.InfantryMovementAdapter;
 import uk.org.downesward.dirtside.adapters.NationalityAdapter;
 import uk.org.downesward.dirtside.domain.Infantry;
 import uk.org.downesward.dirtside.domain.Campaign;
+import uk.org.downesward.dirtside.domain.InfantryMovement;
 import uk.org.downesward.dirtside.domain.Nationality;
 
 /**
@@ -79,6 +82,11 @@ public class InfantryTeamDetailFragment extends Fragment {
 			((TextView) rootView.findViewById(R.id.txtInfantryPersonnelCount))
 			.setText(mItem.getPersonnelCount().toString());			
 			
+			// Binary Capabilities
+			((CheckBox) rootView.findViewById(R.id.chkIAVR)).setChecked(mItem.isIAVR());
+			((CheckBox) rootView.findViewById(R.id.chkFlying)).setChecked(mItem.isFlying());
+			((CheckBox) rootView.findViewById(R.id.chkBiological)).setChecked(mItem.isBiological());
+			
 			DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
 			
 			// Campaigns
@@ -123,6 +131,26 @@ public class InfantryTeamDetailFragment extends Fragment {
 			spinnerPosition = nationalityAdapter.getPosition(thisNationality);
 			spinner.setSelection(spinnerPosition);			
 			
+			// Movement
+			Cursor movementTypes = dbh.getInfantryMovements();
+			ArrayList<InfantryMovement> mMovementTypes = new ArrayList<InfantryMovement>();
+			InfantryMovement thisInfantryMovement = null;
+					
+			while (movementTypes.moveToNext()) {
+				InfantryMovement movementType = new InfantryMovement(movementTypes);
+				if (movementType.getInfantryMovementId() == mItem.getInfantryMovementId()) {
+					thisInfantryMovement = movementType;
+				}
+				mMovementTypes.add(movementType);
+			}
+			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryMovement);
+			InfantryMovementAdapter infantryMovementAdapter = new InfantryMovementAdapter(this.getActivity(),
+					android.R.layout.simple_spinner_item, mMovementTypes);	
+			
+			spinner.setAdapter(infantryMovementAdapter);
+			
+			spinnerPosition = infantryMovementAdapter.getPosition(thisInfantryMovement);
+			spinner.setSelection(spinnerPosition);				
 		}
 
 		return rootView;

@@ -70,7 +70,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor res = db
 				.rawQuery(
-						"SELECT InfantryId, Description, Size, CampaignId, Nationality, Notes, PersonnelCount, Cost FROM Infantry WHERE InfantryId = ?",
+						"SELECT InfantryId, Description, Size, CampaignId, Nationality, Notes, PersonnelCount, Cost, ArtilleryObserver, Flying, Engineering, Teleport, LAD, IAVR, Biological, InfantryMovementId FROM Infantry WHERE InfantryId = ?",
 						new String[] { infantryId.toString() });
 		return res;
 	}
@@ -175,4 +175,22 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 						new String[] { campaignId.toString() });
 		return res;
 	}
+	
+	public Cursor getInfantryMovements() {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT InfantryMovementId, Description, Movement, Cost, HWAllowed, EngineerAllowed FROM InfantryMovement ORDER BY Description",
+						null);
+		return res;
+	}
+	
+	public Cursor getInfantryMovement(Integer infantryMovementId) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT InfantryMovementId, Description, Movement, Cost, HWAllowed, EngineerAllowed FROM InfantryMovement WHERE InfantryMovementId = ?",
+						new String[] { infantryMovementId.toString() });
+		return res;
+	}		
 }
