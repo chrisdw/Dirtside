@@ -25,6 +25,7 @@ public class Infantry {
     private boolean lad;
     private boolean biological;
     private int infantryMovementId;
+    private int infantryFPId;
     
 	public Infantry() {
 	}
@@ -227,5 +228,13 @@ public class Infantry {
 	}
 	public void setInfantryMovementId(Integer infantryMovementId) {
 		this.infantryMovementId = infantryMovementId;
+	}
+
+	public Integer getInfantryFPId() {
+		return infantryFPId;
+	}
+
+	public void setInfantryFPId(Integer infantryFPId) {
+		this.infantryFPId = infantryFPId;
 	}
 }

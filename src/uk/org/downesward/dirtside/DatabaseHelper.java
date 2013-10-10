@@ -70,7 +70,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor res = db
 				.rawQuery(
-						"SELECT InfantryId, Description, Size, CampaignId, Nationality, Notes, PersonnelCount, Cost, ArtilleryObserver, Flying, Engineering, Teleport, LAD, IAVR, Biological, InfantryMovementId FROM Infantry WHERE InfantryId = ?",
+						"SELECT InfantryId, Description, Size, CampaignId, Nationality, Notes, PersonnelCount, Cost, ArtilleryObserver, Flying, Engineering, Teleport, LAD, IAVR, Biological, InfantryMovementId, InfantryFPId FROM Infantry WHERE InfantryId = ?",
 						new String[] { infantryId.toString() });
 		return res;
 	}
@@ -191,6 +191,24 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 				.rawQuery(
 						"SELECT InfantryMovementId, Description, Movement, Cost, HWAllowed, EngineerAllowed FROM InfantryMovement WHERE InfantryMovementId = ?",
 						new String[] { infantryMovementId.toString() });
+		return res;
+	}	
+	
+	public Cursor getInfantryFirepowers() {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT InfantryFPId, Description, Chrits, Cost FROM InfantryFP ORDER BY Description",
+						null);
+		return res;
+	}
+	
+	public Cursor getInfantryFirepower(Integer infantryFPid) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT InfantryFPId, Description, Chrits, Cost FROM InfantryFP WHERE InfantryFPId = ?",
+						new String[] { infantryFPid.toString() });
 		return res;
 	}		
 }

@@ -15,10 +15,12 @@ import android.widget.CheckBox;
 import uk.org.downesward.dirtside.R;
 
 import uk.org.downesward.dirtside.adapters.CampaignAdapter;
+import uk.org.downesward.dirtside.adapters.InfantryFirepowerAdapter;
 import uk.org.downesward.dirtside.adapters.InfantryMovementAdapter;
 import uk.org.downesward.dirtside.adapters.NationalityAdapter;
 import uk.org.downesward.dirtside.domain.Infantry;
 import uk.org.downesward.dirtside.domain.Campaign;
+import uk.org.downesward.dirtside.domain.InfantryFirepower;
 import uk.org.downesward.dirtside.domain.InfantryMovement;
 import uk.org.downesward.dirtside.domain.Nationality;
 
@@ -86,6 +88,9 @@ public class InfantryTeamDetailFragment extends Fragment {
 			((CheckBox) rootView.findViewById(R.id.chkIAVR)).setChecked(mItem.isIAVR());
 			((CheckBox) rootView.findViewById(R.id.chkFlying)).setChecked(mItem.isFlying());
 			((CheckBox) rootView.findViewById(R.id.chkBiological)).setChecked(mItem.isBiological());
+			((CheckBox) rootView.findViewById(R.id.chkLAD)).setChecked(mItem.isLAD());
+			((CheckBox) rootView.findViewById(R.id.chkEngineering)).setChecked(mItem.isEngineering());
+			((CheckBox) rootView.findViewById(R.id.chkTeleport)).setChecked(mItem.isTeleport());
 			
 			DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
 			
@@ -150,6 +155,27 @@ public class InfantryTeamDetailFragment extends Fragment {
 			spinner.setAdapter(infantryMovementAdapter);
 			
 			spinnerPosition = infantryMovementAdapter.getPosition(thisInfantryMovement);
+			spinner.setSelection(spinnerPosition);			
+			
+			// Firepower
+			Cursor firepowers = dbh.getInfantryFirepowers();
+			ArrayList<InfantryFirepower> mFirepowers = new ArrayList<InfantryFirepower>();
+			InfantryFirepower thisInfantryFirepower = null;
+					
+			while (firepowers.moveToNext()) {
+				InfantryFirepower firepower = new InfantryFirepower(firepowers);
+				if (firepower.getInfantryFPId() == mItem.getInfantryFPId()) {
+					thisInfantryFirepower = firepower;
+				}
+				mFirepowers.add(firepower);
+			}
+			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryFirepower);
+			InfantryFirepowerAdapter infantryFirepowerAdapter = new InfantryFirepowerAdapter(this.getActivity(),
+					android.R.layout.simple_spinner_item, mFirepowers);	
+			
+			spinner.setAdapter(infantryFirepowerAdapter);
+			
+			spinnerPosition = infantryFirepowerAdapter.getPosition(thisInfantryFirepower);
 			spinner.setSelection(spinnerPosition);				
 		}
 

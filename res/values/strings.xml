@@ -79,4 +79,7 @@
 	<string name="val_IAVR">IAVR</string>
 	<string name="val_flying">Flying</string>
 	<string name="val_biological">Biological</string>
+	<string name="val_engineering">Engineering</string>
+	<string name="val_lad">LAD</string>
+	<string name="val_teleport">Teleport</string>
 </resources>

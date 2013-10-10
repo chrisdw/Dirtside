@@ -28,72 +28,114 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/val_description" />
-                
+
         <TextView
             android:id="@+id/txtInfantryDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="" />
-    
+
         <TextView
             android:id="@+id/lblInfantryNotes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/val_notes" />                    
+            android:text="@string/val_notes" />
+
         <TextView
             android:id="@+id/txtInfantryNotes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />        
-            
-        <TextView
-            android:id="@+id/lblInfantryCost"
-            android:layout_width="wrap_content"
+            android:text="" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/val_cost" />
-                    
-        <TextView
-            android:id="@+id/txtInfantryCost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" /> 
-            
-        <TextView
-            android:id="@+id/lblInfantryPersonnelCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/val_personnel_count" />
-                    
-        <TextView
-            android:id="@+id/txtInfantryPersonnelCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />     
-            
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/lblInfantryCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/val_cost" />
+
+            <TextView
+                android:id="@+id/txtInfantryCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/lblInfantryPersonnelCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/val_personnel_count" />
+
+            <TextView
+                android:id="@+id/txtInfantryPersonnelCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </LinearLayout>
+
         <Spinner
             android:id="@+id/spnInfantryMovement"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />     
+            android:layout_height="wrap_content" />
+        
+        <Spinner
+            android:id="@+id/spnInfantryFirepower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />        
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/chkIAVR"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/val_IAVR" />
+
+                <CheckBox
+                    android:id="@+id/chkFlying"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/val_flying" />
+            </TableRow>
+
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/chkBiological"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/val_biological" />
+
+                <CheckBox
+                    android:id="@+id/chkEngineering"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/val_engineering" />
+            </TableRow>
             
-	    <CheckBox
-	        android:id="@+id/chkIAVR"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/val_IAVR" />   
-	    	                         
-	    <CheckBox
-	        android:id="@+id/chkFlying"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/val_flying" />           
-	    	                         
-	    <CheckBox
-	        android:id="@+id/chkBiological"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/val_biological" /> 	    
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/chkLAD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/val_lad" />
+
+                <CheckBox
+                    android:id="@+id/chkTeleport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/val_teleport" />
+            </TableRow>            
+        </TableLayout>
     </LinearLayout>
-
-
 
 </FrameLayout>
