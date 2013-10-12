@@ -30,6 +30,19 @@ public class InfantryFirepower {
 		}		
 	}
 	
+	@Override
+	public boolean equals(Object other) {
+		if (other == null) return false;
+		
+		if (this == other) return true;
+		
+		if (other instanceof InfantryFirepower) {
+			return this.getInfantryFPId() == ((InfantryFirepower)other).getInfantryFPId();
+		} else {
+			return false;
+		}
+	}
+	
 	public Integer getInfantryFPId() {
 		return infantryFPId;
 	}

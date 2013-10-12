@@ -17,7 +17,18 @@ public class Nationality {
 			this.setDescription(cursor.getString(colIndex));
 		}
 	}
-
+	@Override
+	public boolean equals(Object other) {
+		if (other == null) return false;
+		
+		if (this == other) return true;
+		
+		if (other instanceof Nationality) {
+			return this.getNationalityId() == ((Nationality)other).getNationalityId();
+		} else {
+			return false;
+		}
+	}
 	public String getDescription() {
 		return description;
 	}

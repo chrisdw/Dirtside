@@ -41,6 +41,14 @@ public class InfantryTeamDetailFragment extends Fragment {
 	 */
 	private Infantry mItem;
 
+	private ArrayList<InfantryMovement> mMovementTypes;
+	private InfantryMovementAdapter infantryMovementAdapter;
+	private ArrayList<InfantryFirepower> mFirepowers;
+	private InfantryFirepowerAdapter infantryFirepowerAdapter;
+	
+	private ArrayList<Campaign> mCampaigns;
+	private CampaignAdapter campaignAdapter; 
+	
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
@@ -63,6 +71,38 @@ public class InfantryTeamDetailFragment extends Fragment {
 				mItem = inf;
 			}
 		}
+		
+		DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
+		
+		Cursor campaigns = dbh.getCampaigns();
+		mCampaigns = new ArrayList<Campaign>();
+				
+		while (campaigns.moveToNext()) {
+			Campaign campaign = new Campaign(campaigns);
+			mCampaigns.add(campaign);
+		}
+		campaignAdapter = new CampaignAdapter(this.getActivity(),
+				android.R.layout.simple_spinner_item, mCampaigns);	
+		
+		Cursor movementTypes = dbh.getInfantryMovements();
+		mMovementTypes = new ArrayList<InfantryMovement>();
+		
+		while (movementTypes.moveToNext()) {
+			InfantryMovement movementType = new InfantryMovement(movementTypes);
+			mMovementTypes.add(movementType);
+		}
+		infantryMovementAdapter = new InfantryMovementAdapter(this.getActivity(),
+				android.R.layout.simple_spinner_item, mMovementTypes);	
+		
+		// Firepower
+		Cursor firepowers = dbh.getInfantryFirepowers();
+		mFirepowers = new ArrayList<InfantryFirepower>();
+		while (firepowers.moveToNext()) {
+			InfantryFirepower firepower = new InfantryFirepower(firepowers);
+			mFirepowers.add(firepower);
+		}
+		infantryFirepowerAdapter = new InfantryFirepowerAdapter(this.getActivity(),
+				android.R.layout.simple_spinner_item, mFirepowers);			
 	}
 
 	@Override
@@ -95,20 +135,10 @@ public class InfantryTeamDetailFragment extends Fragment {
 			DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
 			
 			// Campaigns
-			Cursor campaigns = dbh.getCampaigns();
-			ArrayList<Campaign> mCampaigns = new ArrayList<Campaign>();
-			Campaign thisCampaign = null;
+			Cursor campaign = dbh.getCampaign(mItem.getCampaignId());
+			Campaign thisCampaign = new Campaign(campaign);
 					
-			while (campaigns.moveToNext()) {
-				Campaign campaign = new Campaign(campaigns);
-				if (campaign.getCampaignId() == mItem.getCampaignId()) {
-					thisCampaign = campaign;
-				}
-				mCampaigns.add(campaign);
-			}
 			Spinner spinner = (Spinner) rootView.findViewById(R.id.spnCampaign);
-			CampaignAdapter campaignAdapter = new CampaignAdapter(this.getActivity(),
-					android.R.layout.simple_spinner_item, mCampaigns);	
 
 			spinner.setAdapter(campaignAdapter);
 			
@@ -137,44 +167,20 @@ public class InfantryTeamDetailFragment extends Fragment {
 			spinner.setSelection(spinnerPosition);			
 			
 			// Movement
-			Cursor movementTypes = dbh.getInfantryMovements();
-			ArrayList<InfantryMovement> mMovementTypes = new ArrayList<InfantryMovement>();
-			InfantryMovement thisInfantryMovement = null;
-					
-			while (movementTypes.moveToNext()) {
-				InfantryMovement movementType = new InfantryMovement(movementTypes);
-				if (movementType.getInfantryMovementId() == mItem.getInfantryMovementId()) {
-					thisInfantryMovement = movementType;
-				}
-				mMovementTypes.add(movementType);
-			}
+			Cursor movement = dbh.getInfantryMovement(mItem.getInfantryMovementId());
+			InfantryMovement thisInfantryMovement = new InfantryMovement(movement);				
 			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryMovement);
-			InfantryMovementAdapter infantryMovementAdapter = new InfantryMovementAdapter(this.getActivity(),
-					android.R.layout.simple_spinner_item, mMovementTypes);	
-			
 			spinner.setAdapter(infantryMovementAdapter);
 			
 			spinnerPosition = infantryMovementAdapter.getPosition(thisInfantryMovement);
 			spinner.setSelection(spinnerPosition);			
 			
 			// Firepower
-			Cursor firepowers = dbh.getInfantryFirepowers();
-			ArrayList<InfantryFirepower> mFirepowers = new ArrayList<InfantryFirepower>();
-			InfantryFirepower thisInfantryFirepower = null;
+			Cursor firepowers = dbh.getInfantryFirepower(mItem.getInfantryFPId());
+			InfantryFirepower thisInfantryFirepower = new InfantryFirepower(firepowers);
 					
-			while (firepowers.moveToNext()) {
-				InfantryFirepower firepower = new InfantryFirepower(firepowers);
-				if (firepower.getInfantryFPId() == mItem.getInfantryFPId()) {
-					thisInfantryFirepower = firepower;
-				}
-				mFirepowers.add(firepower);
-			}
-			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryFirepower);
-			InfantryFirepowerAdapter infantryFirepowerAdapter = new InfantryFirepowerAdapter(this.getActivity(),
-					android.R.layout.simple_spinner_item, mFirepowers);	
-			
-			spinner.setAdapter(infantryFirepowerAdapter);
-			
+			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryFirepower);		
+			spinner.setAdapter(infantryFirepowerAdapter);		
 			spinnerPosition = infantryFirepowerAdapter.getPosition(thisInfantryFirepower);
 			spinner.setSelection(spinnerPosition);				
 		}

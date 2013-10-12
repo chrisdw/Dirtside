@@ -40,6 +40,19 @@ public class InfantryMovement {
 		}		
 	}
 	
+	@Override
+	public boolean equals(Object other) {
+		if (other == null) return false;
+		
+		if (this == other) return true;
+		
+		if (other instanceof InfantryMovement) {
+			return this.getInfantryMovementId() == ((InfantryMovement)other).getInfantryMovementId();
+		} else {
+			return false;
+		}
+	}
+	
 	public Integer getInfantryMovementId() {
 		return infantryMovementId;
 	}
