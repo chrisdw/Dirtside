@@ -112,26 +112,6 @@ public class InfantryTeamDetailFragment extends Fragment {
 				container, false);
 
 		if (mItem != null) {
-			((TextView) rootView.findViewById(R.id.txtInfantryDescription))
-					.setText(mItem.getDescription());
-			
-			((TextView) rootView.findViewById(R.id.txtInfantryNotes))
-			.setText(mItem.getNotes());
-			
-			((TextView) rootView.findViewById(R.id.txtInfantryCost))
-			.setText(mItem.getCost().toString());
-			
-			((TextView) rootView.findViewById(R.id.txtInfantryPersonnelCount))
-			.setText(mItem.getPersonnelCount().toString());			
-			
-			// Binary Capabilities
-			((CheckBox) rootView.findViewById(R.id.chkIAVR)).setChecked(mItem.isIAVR());
-			((CheckBox) rootView.findViewById(R.id.chkFlying)).setChecked(mItem.isFlying());
-			((CheckBox) rootView.findViewById(R.id.chkBiological)).setChecked(mItem.isBiological());
-			((CheckBox) rootView.findViewById(R.id.chkLAD)).setChecked(mItem.isLAD());
-			((CheckBox) rootView.findViewById(R.id.chkEngineering)).setChecked(mItem.isEngineering());
-			((CheckBox) rootView.findViewById(R.id.chkTeleport)).setChecked(mItem.isTeleport());
-			
 			DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
 			
 			// Campaigns
@@ -191,7 +171,27 @@ public class InfantryTeamDetailFragment extends Fragment {
 			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryFirepower);		
 			spinner.setAdapter(infantryFirepowerAdapter);		
 			spinnerPosition = infantryFirepowerAdapter.getPosition(thisInfantryFirepower);
-			spinner.setSelection(spinnerPosition);				
+			spinner.setSelection(spinnerPosition);
+			
+			((TextView) rootView.findViewById(R.id.txtInfantryDescription))
+					.setText(mItem.getDescription());
+			
+			((TextView) rootView.findViewById(R.id.txtInfantryNotes))
+			.setText(mItem.getNotes());
+			
+			((TextView) rootView.findViewById(R.id.txtInfantryCost))
+			.setText(mItem.getCost().toString());
+			
+			((TextView) rootView.findViewById(R.id.txtInfantryPersonnelCount))
+			.setText(mItem.getPersonnelCount().toString());			
+			
+			// Binary Capabilities
+			((CheckBox) rootView.findViewById(R.id.chkIAVR)).setChecked(mItem.isIAVR());
+			((CheckBox) rootView.findViewById(R.id.chkFlying)).setChecked(mItem.isFlying());
+			((CheckBox) rootView.findViewById(R.id.chkBiological)).setChecked(mItem.isBiological());
+			((CheckBox) rootView.findViewById(R.id.chkLAD)).setChecked(mItem.isLAD());
+			((CheckBox) rootView.findViewById(R.id.chkEngineering)).setChecked(mItem.isEngineering());
+			((CheckBox) rootView.findViewById(R.id.chkTeleport)).setChecked(mItem.isTeleport());
 		}
 
 		return rootView;
