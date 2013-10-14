@@ -16,12 +16,14 @@ import uk.org.downesward.dirtside.adapters.CampaignAdapter;
 import uk.org.downesward.dirtside.adapters.InfantryFirepowerAdapter;
 import uk.org.downesward.dirtside.adapters.InfantryHitsToKillAdapter;
 import uk.org.downesward.dirtside.adapters.InfantryMovementAdapter;
+import uk.org.downesward.dirtside.adapters.InfantryRangeAdapter;
 import uk.org.downesward.dirtside.adapters.NationalityAdapter;
 import uk.org.downesward.dirtside.domain.Infantry;
 import uk.org.downesward.dirtside.domain.Campaign;
 import uk.org.downesward.dirtside.domain.InfantryFirepower;
 import uk.org.downesward.dirtside.domain.InfantryHitsToKill;
 import uk.org.downesward.dirtside.domain.InfantryMovement;
+import uk.org.downesward.dirtside.domain.InfantryRange;
 import uk.org.downesward.dirtside.domain.Nationality;
 
 /**
@@ -47,6 +49,8 @@ public class InfantryTeamDetailFragment extends Fragment {
 	private InfantryFirepowerAdapter infantryFirepowerAdapter;
 	private ArrayList<InfantryHitsToKill> mHTKs;
 	private InfantryHitsToKillAdapter infantryHTKAdapter;
+	private ArrayList<InfantryRange> mRanges;
+	private InfantryRangeAdapter infantryRangeAdapter;
 	
 	private ArrayList<Campaign> mCampaigns;
 	private CampaignAdapter campaignAdapter; 
@@ -115,6 +119,16 @@ public class InfantryTeamDetailFragment extends Fragment {
 		}
 		infantryHTKAdapter = new InfantryHitsToKillAdapter(this.getActivity(),
 				android.R.layout.simple_spinner_item, mHTKs);			
+		
+		// Ranges
+		Cursor ranges = dbh.getInfantryRanges();
+		mRanges = new ArrayList<InfantryRange>();
+		while (ranges.moveToNext()) {
+			InfantryRange range = new InfantryRange(ranges);
+			mRanges.add(range);
+		}
+		infantryRangeAdapter = new InfantryRangeAdapter(this.getActivity(),
+				android.R.layout.simple_spinner_item, mRanges);			
 	}
 
 	@Override
@@ -196,6 +210,18 @@ public class InfantryTeamDetailFragment extends Fragment {
 			spinner.setAdapter(infantryHTKAdapter);		
 			spinnerPosition = infantryHTKAdapter.getPosition(thisInfantryHTK);
 			spinner.setSelection(spinnerPosition);			
+			
+			// Range
+			Cursor ranges = dbh.getInfantryRange(mItem.getInfantryRangeId());
+			InfantryRange thisInfantryRange = null;
+			if (ranges.moveToNext()) {
+				thisInfantryRange = new InfantryRange(ranges);
+			}
+			
+			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryRange);		
+			spinner.setAdapter(infantryRangeAdapter);		
+			spinnerPosition = infantryRangeAdapter.getPosition(thisInfantryRange);
+			spinner.setSelection(spinnerPosition);	
 			
 			((TextView) rootView.findViewById(R.id.txtInfantryDescription))
 					.setText(mItem.getDescription());

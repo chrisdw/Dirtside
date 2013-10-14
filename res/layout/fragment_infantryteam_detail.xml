@@ -50,32 +50,35 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp" >
+            android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/lblInfantryCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/val_cost" />
+                android:text="@string/val_cost"
+                android:padding="16dp" />
 
             <TextView
                 android:id="@+id/txtInfantryCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
+                android:text=""
+                android:padding="16dp" />
 
             <TextView
                 android:id="@+id/lblInfantryPersonnelCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/val_personnel_count" />
+                android:text="@string/val_personnel_count"
+                android:padding="16dp" />
 
             <TextView
                 android:id="@+id/txtInfantryPersonnelCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
+                android:text=""
+                android:padding="16dp" />
         </LinearLayout>
 
         <Spinner
@@ -92,6 +95,11 @@
             android:id="@+id/spnInfantryHTK"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />   
+            
+        <Spinner
+            android:id="@+id/spnInfantryRange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />          
                     
         <TableLayout
             android:layout_width="wrap_content"

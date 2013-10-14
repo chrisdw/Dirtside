@@ -70,7 +70,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor res = db
 				.rawQuery(
-						"SELECT InfantryId, Description, Size, CampaignId, Nationality, Notes, PersonnelCount, Cost, ArtilleryObserver, Flying, Engineering, Teleport, LAD, IAVR, Biological, InfantryMovementId, InfantryFPId, InfantryHTKId FROM Infantry WHERE InfantryId = ?",
+						"SELECT InfantryId, Description, Size, CampaignId, Nationality, Notes, PersonnelCount, Cost, ArtilleryObserver, Flying, Engineering, Teleport, LAD, IAVR, Biological, InfantryMovementId, InfantryFPId, InfantryHTKId, InfantryRangeId FROM Infantry WHERE InfantryId = ?",
 						new String[] { infantryId.toString() });
 		return res;
 	}
@@ -207,7 +207,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor res = db
 				.rawQuery(
-						"SELECT InfantryFPId, Description, Chits, Cost FROM InfantryFP ORDER BY Description",
+						"SELECT InfantryFPId, Description, Chits, Cost FROM InfantryFP ORDER BY Chits",
 						null);
 		return res;
 	}
@@ -225,7 +225,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor res = db
 				.rawQuery(
-						"SELECT InfantryHTKId, Description, HTK, Cost FROM InfantryHTK ORDER BY Description",
+						"SELECT InfantryHTKId, Description, HTK, Cost FROM InfantryHTK ORDER BY HTK",
 						null);
 		return res;
 	}	
@@ -237,5 +237,23 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 						"SELECT InfantryHTKId, Description, HTK, Cost FROM InfantryHTK WHERE InfantryHTKId = ?",
 						new String[] { infantryHTKId.toString() });
 		return res;
+	}
+	
+	public Cursor getInfantryRanges() {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT InfantryRangeId, Description, Range, Cost FROM InfantryHTK ORDER BY Range",
+						null);
+		return res;
 	}	
+	
+	public Cursor getInfantryRange(Integer infantryRangeId) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT InfantryRangeId, Description, Range, Cost FROM InfantryHTK WHERE InfantryRangeId = ?",
+						new String[] { infantryRangeId.toString() });
+		return res;
+	}		
 }

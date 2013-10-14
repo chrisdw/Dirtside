@@ -27,6 +27,7 @@ public class Infantry {
     private int infantryMovementId;
     private int infantryFPId;
     private int infantryHTKId;
+    private int infantryRangeId;
     
 	public Infantry() {
 	}
@@ -106,7 +107,11 @@ public class Infantry {
 		columnIndex = cursor.getColumnIndex("InfantryHTKId");
 		if (columnIndex != -1) {
 			setInfantryHTKId(cursor.getInt(columnIndex));
-		}		
+		}
+		columnIndex = cursor.getColumnIndex("InfantryRangeId");
+		if (columnIndex != -1) {
+			setInfantryRangeId(cursor.getInt(columnIndex));
+		}				
 	}
 
 	public Integer getInfantryId() {
@@ -249,5 +254,13 @@ public class Infantry {
 
 	public void setInfantryHTKId(Integer infantryHTKId) {
 		this.infantryHTKId = infantryHTKId;
-	}	
+	}
+	
+	public Integer getInfantryRangeId() {
+		return infantryRangeId;
+	}
+
+	public void setInfantryRangeId(Integer infantryRangeId) {
+		this.infantryRangeId = infantryRangeId;
+	}		
 }
