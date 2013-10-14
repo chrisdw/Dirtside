@@ -136,7 +136,10 @@ public class InfantryTeamDetailFragment extends Fragment {
 			
 			// Campaigns
 			Cursor campaign = dbh.getCampaign(mItem.getCampaignId());
-			Campaign thisCampaign = new Campaign(campaign);
+			Campaign thisCampaign = null;
+			if (campaign.moveToNext()) {
+				thisCampaign = new Campaign(campaign);
+			}
 					
 			Spinner spinner = (Spinner) rootView.findViewById(R.id.spnCampaign);
 
@@ -168,7 +171,10 @@ public class InfantryTeamDetailFragment extends Fragment {
 			
 			// Movement
 			Cursor movement = dbh.getInfantryMovement(mItem.getInfantryMovementId());
-			InfantryMovement thisInfantryMovement = new InfantryMovement(movement);				
+			InfantryMovement thisInfantryMovement = null;
+			if (movement.moveToNext()) {
+				thisInfantryMovement = new InfantryMovement(movement);
+			}
 			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryMovement);
 			spinner.setAdapter(infantryMovementAdapter);
 			
@@ -177,7 +183,10 @@ public class InfantryTeamDetailFragment extends Fragment {
 			
 			// Firepower
 			Cursor firepowers = dbh.getInfantryFirepower(mItem.getInfantryFPId());
-			InfantryFirepower thisInfantryFirepower = new InfantryFirepower(firepowers);
+			InfantryFirepower thisInfantryFirepower = null;
+			if (firepowers.moveToNext()) {
+				thisInfantryFirepower = new InfantryFirepower(firepowers);
+			}
 					
 			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryFirepower);		
 			spinner.setAdapter(infantryFirepowerAdapter);		
