@@ -11,16 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.CheckBox;
-
 import uk.org.downesward.dirtside.R;
-
 import uk.org.downesward.dirtside.adapters.CampaignAdapter;
 import uk.org.downesward.dirtside.adapters.InfantryFirepowerAdapter;
+import uk.org.downesward.dirtside.adapters.InfantryHitsToKillAdapter;
 import uk.org.downesward.dirtside.adapters.InfantryMovementAdapter;
 import uk.org.downesward.dirtside.adapters.NationalityAdapter;
 import uk.org.downesward.dirtside.domain.Infantry;
 import uk.org.downesward.dirtside.domain.Campaign;
 import uk.org.downesward.dirtside.domain.InfantryFirepower;
+import uk.org.downesward.dirtside.domain.InfantryHitsToKill;
 import uk.org.downesward.dirtside.domain.InfantryMovement;
 import uk.org.downesward.dirtside.domain.Nationality;
 
@@ -45,6 +45,8 @@ public class InfantryTeamDetailFragment extends Fragment {
 	private InfantryMovementAdapter infantryMovementAdapter;
 	private ArrayList<InfantryFirepower> mFirepowers;
 	private InfantryFirepowerAdapter infantryFirepowerAdapter;
+	private ArrayList<InfantryHitsToKill> mHTKs;
+	private InfantryHitsToKillAdapter infantryHTKAdapter;
 	
 	private ArrayList<Campaign> mCampaigns;
 	private CampaignAdapter campaignAdapter; 
@@ -102,7 +104,17 @@ public class InfantryTeamDetailFragment extends Fragment {
 			mFirepowers.add(firepower);
 		}
 		infantryFirepowerAdapter = new InfantryFirepowerAdapter(this.getActivity(),
-				android.R.layout.simple_spinner_item, mFirepowers);			
+				android.R.layout.simple_spinner_item, mFirepowers);		
+		
+		// Hits to kill
+		Cursor htks = dbh.getInfantryHitsToKill();
+		mHTKs = new ArrayList<InfantryHitsToKill>();
+		while (htks.moveToNext()) {
+			InfantryHitsToKill htk = new InfantryHitsToKill(htks);
+			mHTKs.add(htk);
+		}
+		infantryHTKAdapter = new InfantryHitsToKillAdapter(this.getActivity(),
+				android.R.layout.simple_spinner_item, mHTKs);			
 	}
 
 	@Override
@@ -172,6 +184,18 @@ public class InfantryTeamDetailFragment extends Fragment {
 			spinner.setAdapter(infantryFirepowerAdapter);		
 			spinnerPosition = infantryFirepowerAdapter.getPosition(thisInfantryFirepower);
 			spinner.setSelection(spinnerPosition);
+			
+			// Hits to kill
+			Cursor htks = dbh.getInfantryFirepower(mItem.getInfantryHTKId());
+			InfantryHitsToKill thisInfantryHTK = null;
+			if (firepowers.moveToNext()) {
+				thisInfantryHTK = new InfantryHitsToKill(htks);
+			}
+			
+			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryHTK);		
+			spinner.setAdapter(infantryHTKAdapter);		
+			spinnerPosition = infantryHTKAdapter.getPosition(thisInfantryHTK);
+			spinner.setSelection(spinnerPosition);			
 			
 			((TextView) rootView.findViewById(R.id.txtInfantryDescription))
 					.setText(mItem.getDescription());

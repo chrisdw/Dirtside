@@ -26,6 +26,7 @@ public class Infantry {
     private boolean biological;
     private int infantryMovementId;
     private int infantryFPId;
+    private int infantryHTKId;
     
 	public Infantry() {
 	}
@@ -101,6 +102,10 @@ public class Infantry {
 		columnIndex = cursor.getColumnIndex("InfantryMovementId");
 		if (columnIndex != -1) {
 			setInfantryMovementId(cursor.getInt(columnIndex));
+		}
+		columnIndex = cursor.getColumnIndex("InfantryHTKId");
+		if (columnIndex != -1) {
+			setInfantryHTKId(cursor.getInt(columnIndex));
 		}		
 	}
 
@@ -237,4 +242,12 @@ public class Infantry {
 	public void setInfantryFPId(Integer infantryFPId) {
 		this.infantryFPId = infantryFPId;
 	}
+	
+	public Integer getInfantryHTKId() {
+		return infantryHTKId;
+	}
+
+	public void setInfantryHTKId(Integer infantryHTKId) {
+		this.infantryHTKId = infantryHTKId;
+	}	
 }

@@ -24,7 +24,7 @@ public class InfantryFirepower {
 		if (columnIndex != -1) {
 			setCost(cursor.getInt(columnIndex));
 		}
-		columnIndex = cursor.getColumnIndex("Chrits");
+		columnIndex = cursor.getColumnIndex("Chits");
 		if (columnIndex != -1) {
 			setChits(cursor.getInt(columnIndex));
 		}		

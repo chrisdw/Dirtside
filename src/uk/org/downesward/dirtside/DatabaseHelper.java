@@ -70,7 +70,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor res = db
 				.rawQuery(
-						"SELECT InfantryId, Description, Size, CampaignId, Nationality, Notes, PersonnelCount, Cost, ArtilleryObserver, Flying, Engineering, Teleport, LAD, IAVR, Biological, InfantryMovementId, InfantryFPId FROM Infantry WHERE InfantryId = ?",
+						"SELECT InfantryId, Description, Size, CampaignId, Nationality, Notes, PersonnelCount, Cost, ArtilleryObserver, Flying, Engineering, Teleport, LAD, IAVR, Biological, InfantryMovementId, InfantryFPId, InfantryHTKId FROM Infantry WHERE InfantryId = ?",
 						new String[] { infantryId.toString() });
 		return res;
 	}
@@ -219,5 +219,23 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 						"SELECT InfantryFPId, Description, Chits, Cost FROM InfantryFP WHERE InfantryFPId = ?",
 						new String[] { infantryFPid.toString() });
 		return res;
-	}		
+	}
+	
+	public Cursor getInfantryHitsToKill() {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT InfantryHTKId, Description, HTK, Cost FROM InfantryHTK ORDER BY Description",
+						null);
+		return res;
+	}	
+	
+	public Cursor getInfantryHitsToKill(Integer infantryHTKId) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT InfantryHTKId, Description, HTK, Cost FROM InfantryHTK WHERE InfantryHTKId = ?",
+						new String[] { infantryHTKId.toString() });
+		return res;
+	}	
 }
