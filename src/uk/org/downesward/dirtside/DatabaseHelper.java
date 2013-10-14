@@ -243,7 +243,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor res = db
 				.rawQuery(
-						"SELECT InfantryRangeId, Description, Range, Cost FROM InfantryHTK ORDER BY Range",
+						"SELECT InfantryRangeId, Description, Range, Cost FROM InfantryRange ORDER BY Range",
 						null);
 		return res;
 	}	
@@ -252,7 +252,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		SQLiteDatabase db = getReadableDatabase();
 		Cursor res = db
 				.rawQuery(
-						"SELECT InfantryRangeId, Description, Range, Cost FROM InfantryHTK WHERE InfantryRangeId = ?",
+						"SELECT InfantryRangeId, Description, Range, Cost FROM InfantryRange WHERE InfantryRangeId = ?",
 						new String[] { infantryRangeId.toString() });
 		return res;
 	}		
