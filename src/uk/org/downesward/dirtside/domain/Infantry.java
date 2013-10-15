@@ -28,6 +28,9 @@ public class Infantry {
     private int infantryFPId;
     private int infantryHTKId;
     private int infantryRangeId;
+    private String weaponTypeId;
+    private String weaponSizeId;
+    private String weaponGuidanceId;
     
 	public Infantry() {
 	}
@@ -111,7 +114,19 @@ public class Infantry {
 		columnIndex = cursor.getColumnIndex("InfantryRangeId");
 		if (columnIndex != -1) {
 			setInfantryRangeId(cursor.getInt(columnIndex));
-		}				
+		}			
+		columnIndex = cursor.getColumnIndex("WeaponTypeId");
+		if (columnIndex != -1) {
+			setWeaponTypeId(cursor.getString(columnIndex));
+		}
+		columnIndex = cursor.getColumnIndex("WeaponSizeId");
+		if (columnIndex != -1) {
+			setWeaponSizeId(cursor.getString(columnIndex));
+		}
+		columnIndex = cursor.getColumnIndex("WeaponGuidanceId");
+		if (columnIndex != -1) {
+			setWeaponGuidanceId(cursor.getString(columnIndex));
+		}		
 	}
 
 	public Integer getInfantryId() {
@@ -262,5 +277,29 @@ public class Infantry {
 
 	public void setInfantryRangeId(Integer infantryRangeId) {
 		this.infantryRangeId = infantryRangeId;
+	}
+
+	public String getWeaponTypeId() {
+		return weaponTypeId;
+	}
+
+	public void setWeaponTypeId(String weaponTypeId) {
+		this.weaponTypeId = weaponTypeId;
+	}
+
+	public String getWeaponSizeId() {
+		return weaponSizeId;
+	}
+
+	public void setWeaponSizeId(String weaponSizeId) {
+		this.weaponSizeId = weaponSizeId;
+	}
+
+	public String getWeaponGuidanceId() {
+		return weaponGuidanceId;
+	}
+
+	public void setWeaponGuidanceId(String weaponGuidanceId) {
+		this.weaponGuidanceId = weaponGuidanceId;
 	}		
 }

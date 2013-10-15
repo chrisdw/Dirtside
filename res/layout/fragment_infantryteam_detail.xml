@@ -56,51 +56,51 @@
                 android:id="@+id/lblInfantryCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/val_cost"
-                android:padding="16dp" />
+                android:padding="16dp"
+                android:text="@string/val_cost" />
 
             <TextView
                 android:id="@+id/txtInfantryCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:padding="16dp" />
+                android:padding="16dp"
+                android:text="" />
 
             <TextView
                 android:id="@+id/lblInfantryPersonnelCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/val_personnel_count"
-                android:padding="16dp" />
+                android:padding="16dp"
+                android:text="@string/val_personnel_count" />
 
             <TextView
                 android:id="@+id/txtInfantryPersonnelCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:padding="16dp" />
+                android:padding="16dp"
+                android:text="" />
         </LinearLayout>
 
         <Spinner
             android:id="@+id/spnInfantryMovement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        
+
         <Spinner
             android:id="@+id/spnInfantryFirepower"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />        
+            android:layout_height="wrap_content" />
 
         <Spinner
             android:id="@+id/spnInfantryHTK"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />   
-            
+            android:layout_height="wrap_content" />
+
         <Spinner
             android:id="@+id/spnInfantryRange"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />          
-                    
+            android:layout_height="wrap_content" />
+
         <TableLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
@@ -134,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/val_engineering" />
             </TableRow>
-            
+
             <TableRow>
 
                 <CheckBox
@@ -148,8 +148,82 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/val_teleport" />
-            </TableRow>            
+            </TableRow>
         </TableLayout>
+
+        <LinearLayout
+            android:id="@+id/pnlInfantryWeapons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/lblInfantryWeapons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/val_weapon" />
+
+            <TextView
+                android:id="@+id/txtInfantryWeapon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="" />
+
+            <TableLayout
+                android:id="@+id/pnlInfantryRanges"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/lblInfantryRangeShort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/val_short" />
+
+                    <TextView
+                        android:id="@+id/lblInfantryRangeMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/val_medium" />
+
+                    <TextView
+                        android:id="@+id/lblInfantryRangeLong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/val_long" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/txtInfantryRangeShort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+
+                    <TextView
+                        android:id="@+id/txtInfantryRangeMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+
+                    <TextView
+                        android:id="@+id/txtInfantryRangeLong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

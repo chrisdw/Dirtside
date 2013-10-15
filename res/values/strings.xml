@@ -44,42 +44,43 @@
     </string-array>
 
     <string name="val_htk">Hits to Kill</string>
-    
     <string name="msg_not_capable">Automatic Miss - Firecontrol not capable\n</string>
     <string name="msg_missiles_cant_shoot_inf">GMS\'s amd HVMS\'s cannot attack infantry\n</string>
-	<string name="msg_attack_result">Attacker D%1$d rolls %2$d\n</string>
-	<string name="msg_out_of_range">*** Out of Range ***\n</string>
-	<string name="msg_ads_result">ADS D%1$d rolls %2$d\n</string>
-	<string name="msg_pds_result">PDS D%1$d rolls %2$d\n</string>
-	<string name="msg_ecm_result">ECM D%1$d rolls %2$d\n</string>	
-	<string name="msg_result_die">D%1$d -vs- D%2$d and D%3$d\n</string>
-	<string name="msg_missed">The attack missed\n</string>
-	<string name="msg_result">%1$d -vs- %2$d, %3$d\n</string>
-	<string name="msg_iavr_inf">IAVR\'s can not attack infantry\n</string>
-	<string name="msg_autohit">Automatic hit</string>
-	<string name="msg_spillover">Targets within %1$d  mu can be hit by spillover fire\n</string>
-	<string name="msg_armour">Armour: %1$s, valid chits %2$s\n</string>
-	<string name="msg_total_damage">Total Damage: %1$d, %2$s\n</string>
-	
-	<string name="msg_destroyed">Target destroyed</string>
-	<string name="msg_damaged">Target damaged</string>
-	<string name="msg_no_effect">Target un-damaged</string>
-	
-	<string name="chit_b">Boom!</string>
-	<string name="chit_fd">Firer Systems Down</string>
-	<string name="chit_td">Target Systems Down</string>
-	<string name="chit_mb">Mobility</string>
-	<string name="val_messages">Messages</string>
-	<string name="val_die_rolls">Die Rolls</string>
-	<string name="val_results">Results</string>
-	<string name="val_notes">Notes</string>
-	<string name="val_description">Description</string>
-	<string name="val_cost">Cost</string>
-	<string name="val_personnel_count">Personnel Count</string>
-	<string name="val_IAVR">IAVR</string>
-	<string name="val_flying">Flying</string>
-	<string name="val_biological">Biological</string>
-	<string name="val_engineering">Engineering</string>
-	<string name="val_lad">LAD</string>
-	<string name="val_teleport">Teleport</string>
+    <string name="msg_attack_result">Attacker D%1$d rolls %2$d\n</string>
+    <string name="msg_out_of_range">*** Out of Range ***\n</string>
+    <string name="msg_ads_result">ADS D%1$d rolls %2$d\n</string>
+    <string name="msg_pds_result">PDS D%1$d rolls %2$d\n</string>
+    <string name="msg_ecm_result">ECM D%1$d rolls %2$d\n</string>
+    <string name="msg_result_die">D%1$d -vs- D%2$d and D%3$d\n</string>
+    <string name="msg_missed">The attack missed\n</string>
+    <string name="msg_result">%1$d -vs- %2$d, %3$d\n</string>
+    <string name="msg_iavr_inf">IAVR\'s can not attack infantry\n</string>
+    <string name="msg_autohit">Automatic hit</string>
+    <string name="msg_spillover">Targets within %1$d  mu can be hit by spillover fire\n</string>
+    <string name="msg_armour">Armour: %1$s, valid chits %2$s\n</string>
+    <string name="msg_total_damage">Total Damage: %1$d, %2$s\n</string>
+    <string name="msg_destroyed">Target destroyed</string>
+    <string name="msg_damaged">Target damaged</string>
+    <string name="msg_no_effect">Target un-damaged</string>
+    <string name="chit_b">Boom!</string>
+    <string name="chit_fd">Firer Systems Down</string>
+    <string name="chit_td">Target Systems Down</string>
+    <string name="chit_mb">Mobility</string>
+    <string name="val_messages">Messages</string>
+    <string name="val_die_rolls">Die Rolls</string>
+    <string name="val_results">Results</string>
+    <string name="val_notes">Notes</string>
+    <string name="val_description">Description</string>
+    <string name="val_cost">Cost</string>
+    <string name="val_personnel_count">Personnel Count</string>
+    <string name="val_IAVR">IAVR</string>
+    <string name="val_flying">Flying</string>
+    <string name="val_biological">Biological</string>
+    <string name="val_engineering">Engineering</string>
+    <string name="val_lad">LAD</string>
+    <string name="val_teleport">Teleport</string>
+    <string name="val_short">Short</string>
+    <string name="val_medium">Medium</string>
+    <string name="val_long">Long</string>
+
 </resources>

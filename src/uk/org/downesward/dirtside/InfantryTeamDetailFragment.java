@@ -25,6 +25,7 @@ import uk.org.downesward.dirtside.domain.InfantryHitsToKill;
 import uk.org.downesward.dirtside.domain.InfantryMovement;
 import uk.org.downesward.dirtside.domain.InfantryRange;
 import uk.org.downesward.dirtside.domain.Nationality;
+import uk.org.downesward.dirtside.domain.Weapon;
 
 /**
  * A fragment representing a single InfantryTeam detail screen. This fragment is
@@ -51,10 +52,10 @@ public class InfantryTeamDetailFragment extends Fragment {
 	private InfantryHitsToKillAdapter infantryHTKAdapter;
 	private ArrayList<InfantryRange> mRanges;
 	private InfantryRangeAdapter infantryRangeAdapter;
-	
+
 	private ArrayList<Campaign> mCampaigns;
-	private CampaignAdapter campaignAdapter; 
-	
+	private CampaignAdapter campaignAdapter;
+
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
@@ -77,29 +78,30 @@ public class InfantryTeamDetailFragment extends Fragment {
 				mItem = inf;
 			}
 		}
-		
+
 		DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
-		
+
 		Cursor campaigns = dbh.getCampaigns();
 		mCampaigns = new ArrayList<Campaign>();
-				
+
 		while (campaigns.moveToNext()) {
 			Campaign campaign = new Campaign(campaigns);
 			mCampaigns.add(campaign);
 		}
 		campaignAdapter = new CampaignAdapter(this.getActivity(),
-				android.R.layout.simple_spinner_item, mCampaigns);	
-		
+				android.R.layout.simple_spinner_item, mCampaigns);
+
 		Cursor movementTypes = dbh.getInfantryMovements();
 		mMovementTypes = new ArrayList<InfantryMovement>();
-		
+
 		while (movementTypes.moveToNext()) {
 			InfantryMovement movementType = new InfantryMovement(movementTypes);
 			mMovementTypes.add(movementType);
 		}
-		infantryMovementAdapter = new InfantryMovementAdapter(this.getActivity(),
-				android.R.layout.simple_spinner_item, mMovementTypes);	
-		
+		infantryMovementAdapter = new InfantryMovementAdapter(
+				this.getActivity(), android.R.layout.simple_spinner_item,
+				mMovementTypes);
+
 		// Firepower
 		Cursor firepowers = dbh.getInfantryFirepowers();
 		mFirepowers = new ArrayList<InfantryFirepower>();
@@ -107,9 +109,10 @@ public class InfantryTeamDetailFragment extends Fragment {
 			InfantryFirepower firepower = new InfantryFirepower(firepowers);
 			mFirepowers.add(firepower);
 		}
-		infantryFirepowerAdapter = new InfantryFirepowerAdapter(this.getActivity(),
-				android.R.layout.simple_spinner_item, mFirepowers);		
-		
+		infantryFirepowerAdapter = new InfantryFirepowerAdapter(
+				this.getActivity(), android.R.layout.simple_spinner_item,
+				mFirepowers);
+
 		// Hits to kill
 		Cursor htks = dbh.getInfantryHitsToKill();
 		mHTKs = new ArrayList<InfantryHitsToKill>();
@@ -118,8 +121,8 @@ public class InfantryTeamDetailFragment extends Fragment {
 			mHTKs.add(htk);
 		}
 		infantryHTKAdapter = new InfantryHitsToKillAdapter(this.getActivity(),
-				android.R.layout.simple_spinner_item, mHTKs);			
-		
+				android.R.layout.simple_spinner_item, mHTKs);
+
 		// Ranges
 		Cursor ranges = dbh.getInfantryRanges();
 		mRanges = new ArrayList<InfantryRange>();
@@ -128,7 +131,7 @@ public class InfantryTeamDetailFragment extends Fragment {
 			mRanges.add(range);
 		}
 		infantryRangeAdapter = new InfantryRangeAdapter(this.getActivity(),
-				android.R.layout.simple_spinner_item, mRanges);			
+				android.R.layout.simple_spinner_item, mRanges);
 	}
 
 	@Override
@@ -139,26 +142,27 @@ public class InfantryTeamDetailFragment extends Fragment {
 
 		if (mItem != null) {
 			DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
-			
+
 			// Campaigns
 			Cursor campaign = dbh.getCampaign(mItem.getCampaignId());
 			Campaign thisCampaign = null;
 			if (campaign.moveToNext()) {
 				thisCampaign = new Campaign(campaign);
 			}
-					
+
 			Spinner spinner = (Spinner) rootView.findViewById(R.id.spnCampaign);
 
 			spinner.setAdapter(campaignAdapter);
-			
+
 			int spinnerPosition = campaignAdapter.getPosition(thisCampaign);
 			spinner.setSelection(spinnerPosition);
-			
+
 			// Nationality
-			Cursor nationalities = dbh.getNationalitiesForCampaign(mItem.getCampaignId());
+			Cursor nationalities = dbh.getNationalitiesForCampaign(mItem
+					.getCampaignId());
 			ArrayList<Nationality> mNationalities = new ArrayList<Nationality>();
-			Nationality thisNationality = null;		
-					
+			Nationality thisNationality = null;
+
 			while (nationalities.moveToNext()) {
 				Nationality nationality = new Nationality(nationalities);
 				if (nationality.getNationalityId() == mItem.getNationalityId()) {
@@ -167,81 +171,141 @@ public class InfantryTeamDetailFragment extends Fragment {
 				mNationalities.add(nationality);
 			}
 			spinner = (Spinner) rootView.findViewById(R.id.spnNationality);
-			NationalityAdapter nationalityAdapter = new NationalityAdapter(this.getActivity(),
-					android.R.layout.simple_spinner_item, mNationalities);	
-			
+			NationalityAdapter nationalityAdapter = new NationalityAdapter(
+					this.getActivity(), android.R.layout.simple_spinner_item,
+					mNationalities);
+
 			spinner.setAdapter(nationalityAdapter);
-			
+
 			spinnerPosition = nationalityAdapter.getPosition(thisNationality);
-			spinner.setSelection(spinnerPosition);			
-			
+			spinner.setSelection(spinnerPosition);
+
 			// Movement
-			Cursor movement = dbh.getInfantryMovement(mItem.getInfantryMovementId());
+			Cursor movement = dbh.getInfantryMovement(mItem
+					.getInfantryMovementId());
 			InfantryMovement thisInfantryMovement = null;
 			if (movement.moveToNext()) {
 				thisInfantryMovement = new InfantryMovement(movement);
 			}
 			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryMovement);
 			spinner.setAdapter(infantryMovementAdapter);
-			
-			spinnerPosition = infantryMovementAdapter.getPosition(thisInfantryMovement);
-			spinner.setSelection(spinnerPosition);			
-			
+
+			spinnerPosition = infantryMovementAdapter
+					.getPosition(thisInfantryMovement);
+			spinner.setSelection(spinnerPosition);
+
 			// Firepower
-			Cursor firepowers = dbh.getInfantryFirepower(mItem.getInfantryFPId());
+			Cursor firepowers = dbh.getInfantryFirepower(mItem
+					.getInfantryFPId());
 			InfantryFirepower thisInfantryFirepower = null;
 			if (firepowers.moveToNext()) {
 				thisInfantryFirepower = new InfantryFirepower(firepowers);
 			}
-					
-			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryFirepower);		
-			spinner.setAdapter(infantryFirepowerAdapter);		
-			spinnerPosition = infantryFirepowerAdapter.getPosition(thisInfantryFirepower);
+
+			spinner = (Spinner) rootView
+					.findViewById(R.id.spnInfantryFirepower);
+			spinner.setAdapter(infantryFirepowerAdapter);
+			spinnerPosition = infantryFirepowerAdapter
+					.getPosition(thisInfantryFirepower);
 			spinner.setSelection(spinnerPosition);
-			
+
 			// Hits to kill
 			Cursor htks = dbh.getInfantryFirepower(mItem.getInfantryHTKId());
 			InfantryHitsToKill thisInfantryHTK = null;
 			if (firepowers.moveToNext()) {
 				thisInfantryHTK = new InfantryHitsToKill(htks);
 			}
-			
-			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryHTK);		
-			spinner.setAdapter(infantryHTKAdapter);		
+
+			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryHTK);
+			spinner.setAdapter(infantryHTKAdapter);
 			spinnerPosition = infantryHTKAdapter.getPosition(thisInfantryHTK);
-			spinner.setSelection(spinnerPosition);			
-			
+			spinner.setSelection(spinnerPosition);
+
 			// Range
-			Cursor ranges = dbh.getInfantryRange(mItem.getInfantryRangeId());
+			Cursor range = dbh.getInfantryRange(mItem.getInfantryRangeId());
 			InfantryRange thisInfantryRange = null;
-			if (ranges.moveToNext()) {
-				thisInfantryRange = new InfantryRange(ranges);
+			if (range.moveToNext()) {
+				thisInfantryRange = new InfantryRange(range);
 			}
-			
-			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryRange);		
-			spinner.setAdapter(infantryRangeAdapter);		
-			spinnerPosition = infantryRangeAdapter.getPosition(thisInfantryRange);
-			spinner.setSelection(spinnerPosition);	
-			
+
+			spinner = (Spinner) rootView.findViewById(R.id.spnInfantryRange);
+			spinner.setAdapter(infantryRangeAdapter);
+			spinnerPosition = infantryRangeAdapter
+					.getPosition(thisInfantryRange);
+			spinner.setSelection(spinnerPosition);
+
 			((TextView) rootView.findViewById(R.id.txtInfantryDescription))
 					.setText(mItem.getDescription());
-			
+
 			((TextView) rootView.findViewById(R.id.txtInfantryNotes))
-			.setText(mItem.getNotes());
-			
+					.setText(mItem.getNotes());
+
 			((TextView) rootView.findViewById(R.id.txtInfantryCost))
-			.setText(mItem.getCost().toString());
-			
+					.setText(mItem.getCost().toString());
+
 			((TextView) rootView.findViewById(R.id.txtInfantryPersonnelCount))
-			.setText(mItem.getPersonnelCount().toString());			
-			
+					.setText(mItem.getPersonnelCount().toString());
+
 			// Binary Capabilities
-			((CheckBox) rootView.findViewById(R.id.chkIAVR)).setChecked(mItem.isIAVR());
-			((CheckBox) rootView.findViewById(R.id.chkFlying)).setChecked(mItem.isFlying());
-			((CheckBox) rootView.findViewById(R.id.chkBiological)).setChecked(mItem.isBiological());
-			((CheckBox) rootView.findViewById(R.id.chkLAD)).setChecked(mItem.isLAD());
-			((CheckBox) rootView.findViewById(R.id.chkEngineering)).setChecked(mItem.isEngineering());
-			((CheckBox) rootView.findViewById(R.id.chkTeleport)).setChecked(mItem.isTeleport());
+			((CheckBox) rootView.findViewById(R.id.chkIAVR)).setChecked(mItem
+					.isIAVR());
+			((CheckBox) rootView.findViewById(R.id.chkFlying)).setChecked(mItem
+					.isFlying());
+			((CheckBox) rootView.findViewById(R.id.chkBiological))
+					.setChecked(mItem.isBiological());
+			((CheckBox) rootView.findViewById(R.id.chkLAD)).setChecked(mItem
+					.isLAD());
+			((CheckBox) rootView.findViewById(R.id.chkEngineering))
+					.setChecked(mItem.isEngineering());
+			((CheckBox) rootView.findViewById(R.id.chkTeleport))
+					.setChecked(mItem.isTeleport());
+
+			View pnlInf = rootView.findViewById(R.id.pnlInfantryWeapons);
+
+			if (mItem.getWeaponTypeId() != null) {
+				pnlInf.setVisibility(View.VISIBLE);
+				String display = mItem.getWeaponTypeId() + "/"
+						+ mItem.getWeaponSizeId() + "("
+						+ mItem.getWeaponGuidanceId() + ")";
+				((TextView) rootView.findViewById(R.id.txtInfantryWeapon))
+						.setText(display);
+
+				Weapon weapon = new Weapon(mItem.getWeaponTypeId(), "");
+				weapon.setSize(mItem.getWeaponSizeId());
+
+				Cursor ranges = dbh.getRanges();
+				int colIndex = ranges.getColumnIndex("RangeId");
+				while (ranges.moveToNext()) {
+					Cursor wpnRange = dbh.getRangeForWeaponTypeRangeBand(
+							mItem.getWeaponTypeId(), mItem.getWeaponSizeId(),
+							ranges.getString(colIndex));
+					int colIndex2 = wpnRange.getColumnIndex("Range");
+					if (wpnRange.moveToNext()) {
+						TextView rangeText = null;
+						if (ranges.getInt(colIndex) == 1) {
+							rangeText = (TextView) rootView
+									.findViewById(R.id.txtInfantryRangeShort);
+						} else if (ranges.getInt(colIndex) == 2) {
+							rangeText = (TextView) rootView
+									.findViewById(R.id.txtInfantryRangeMedium);
+						} else if (ranges.getInt(colIndex) == 3) {
+							rangeText = (TextView) rootView
+									.findViewById(R.id.txtInfantryRangeLong);
+						}
+						if (rangeText != null) {
+							String displayString = wpnRange
+									.getString(colIndex2)
+									+ "/"
+									+ weapon.validChits(
+											ranges.getInt(colIndex), 1,
+											this.getActivity()).chits;
+							rangeText.setText(displayString);
+						}
+					}
+				}
+			} else {
+				pnlInf.setVisibility(View.GONE);
+			}
 		}
 
 		return rootView;
