@@ -33,5 +33,15 @@ public class ActivitySelectionActivity extends Activity {
 				startActivity(intent);
 			}         
 		});		
+		
+		butGen = (Button) this.findViewById(R.id.butListCampaigns);
+		
+		butGen.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(ActivitySelectionActivity.this,
+						CampaignsActivity.class);
+				startActivity(intent);
+			}         
+		});			
 	}
 }
