@@ -37,11 +37,11 @@ public class Nationality {
 		this.description = description;
 	}
 
-	public int getNationalityId() {
+	public Integer getNationalityId() {
 		return nationalityId;
 	}
 
-	public void setNationalityId(int campaignId) {
+	public void setNationalityId(Integer campaignId) {
 		this.nationalityId = campaignId;
 	}
 

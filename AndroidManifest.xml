@@ -40,6 +40,22 @@
             android:name="uk.org.downesward.dirtside.CampaignsActivity"
             android:label="@string/title_activity_campaigns" >
         </activity>
+        <activity
+            android:name="uk.org.downesward.dirtside.NationalitiesActivity"
+            android:label="@string/title_activity_nationalities" >
+        </activity>
+        <activity
+            android:name="uk.org.downesward.dirtside.NationalityListActivity"
+            android:label="@string/title_nationality_list" >
+        </activity>
+        <activity
+            android:name="uk.org.downesward.dirtside.NationalityDetailActivity"
+            android:label="@string/title_nationality_detail"
+            android:parentActivityName=".NationalityListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".NationalityListActivity" />
+        </activity>
     </application>
 
 </manifest>

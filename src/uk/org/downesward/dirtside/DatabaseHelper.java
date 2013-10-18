@@ -175,6 +175,15 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 						null);
 		return res;
 	}
+	
+	public Cursor getNationality(Integer nationalityId) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT NationalityId, Description FROM Nationality WHERE NationalityId = ?",
+						new String[] { nationalityId.toString() });
+		return res;
+	}
 
 	public Cursor getNationalitiesForCampaign(Integer campaignId) {
 		SQLiteDatabase db = getReadableDatabase();

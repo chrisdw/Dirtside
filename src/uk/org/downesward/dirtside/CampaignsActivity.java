@@ -6,6 +6,7 @@ import uk.org.downesward.dirtside.adapters.CampaignAdapter;
 import uk.org.downesward.dirtside.domain.Campaign;
 import android.os.Bundle;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.view.Menu;
 import android.view.View;
@@ -19,7 +20,6 @@ public class CampaignsActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_campaigns);
 		
 		DatabaseHelper dbh = new DatabaseHelper(this);
 
@@ -49,7 +49,10 @@ public class CampaignsActivity extends ListActivity {
 		Bundle b = new Bundle();
 		Campaign item = (Campaign) getListAdapter().getItem(position);
 		b.putInt("CampaignId", item.getCampaignId());
-		// TODO: Launch a nationality activity for this campaign
+		Intent intent = new Intent(CampaignsActivity.this,
+				NationalitiesActivity.class);
+		intent.putExtras(b);
+		startActivity(intent);
 	}
 
 }
