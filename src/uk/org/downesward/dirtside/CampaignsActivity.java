@@ -50,7 +50,7 @@ public class CampaignsActivity extends ListActivity {
 		Campaign item = (Campaign) getListAdapter().getItem(position);
 		b.putInt("CampaignId", item.getCampaignId());
 		Intent intent = new Intent(CampaignsActivity.this,
-				NationalitiesActivity.class);
+				NationalityListActivity.class);
 		intent.putExtras(b);
 		startActivity(intent);
 	}

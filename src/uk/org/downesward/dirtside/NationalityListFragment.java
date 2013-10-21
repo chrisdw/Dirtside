@@ -20,8 +20,14 @@ import uk.org.downesward.dirtside.domain.Nationality;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class NationalityListFragment extends ListFragment {
+public class NationalityListFragment extends ListFragment implements NationalitiesLister {
+	
+	private int campaignId;
+	
 	private ArrayList<Nationality> mNationalities;
+	
+	private NationalityAdapter nationalityAdapter;
+	
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
 	 * activated item position. Only used on tablets.
@@ -71,15 +77,12 @@ public class NationalityListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		mNationalities = new ArrayList<Nationality>();
 		
-		NationalityAdapter nationalityAdapter;
-		
-		Bundle b = this.getArguments();
 		DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
 		Cursor nationalities;
-		if (b != null && b.containsKey("CampaignId")) {
-			nationalities = dbh.getNationalitiesForCampaign(b.getInt("CampaignId"));
+		if (this.getCampaignId() != 0) {
+			nationalities = dbh.getNationalitiesForCampaign(this.getCampaignId());
 		} else {
 			nationalities = dbh.getNationalities();
 		}
@@ -92,7 +95,6 @@ public class NationalityListFragment extends ListFragment {
 				this.getActivity(), android.R.layout.simple_spinner_item,
 				mNationalities);
 		
-		// TODO: replace with a real list adapter.
 		setListAdapter(nationalityAdapter);
 	}
 
@@ -136,7 +138,7 @@ public class NationalityListFragment extends ListFragment {
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(mNationalities.get(position).getNationalityId().toString());
+		mCallbacks.onItemSelected(nationalityAdapter.getItem(position).getNationalityId().toString());
 	}
 
 	@Override
@@ -168,5 +170,28 @@ public class NationalityListFragment extends ListFragment {
 		}
 
 		mActivatedPosition = position;
+	}
+
+	@Override
+	public Integer getCampaignId() {
+		return this.campaignId;
+	}
+
+	@Override
+	public void setCampaignId(Integer campaignId) {
+		this.campaignId = campaignId;
+		DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
+		Cursor nationalities;
+		if (this.getCampaignId() != 0) {
+			nationalities = dbh.getNationalitiesForCampaign(this.getCampaignId());
+		} else {
+			nationalities = dbh.getNationalities();
+		}
+		nationalityAdapter.clear();
+		while (nationalities.moveToNext()) {
+			Nationality nationality = new Nationality(nationalities);
+			nationalityAdapter.add(nationality);
+		}
+		nationalityAdapter.notifyDataSetChanged();
 	}
 }

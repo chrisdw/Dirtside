@@ -54,7 +54,10 @@ public class NationalityListActivity extends FragmentActivity implements
 
 		}
 
-		// TODO: If exposing deep links into your app, handle intents here.
+		// Push the campaign id into the list fragment
+		NationalitiesLister lister = (NationalitiesLister)getSupportFragmentManager()
+				.findFragmentById(R.id.nationality_list);
+		lister.setCampaignId(campaignId);
 	}
 
 	/**
