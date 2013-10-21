@@ -20,9 +20,14 @@ import android.widget.ListView;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class InfantryTeamListFragment extends ListFragment {
+public class InfantryTeamListFragment extends ListFragment 
+	implements CampaignNationalityFiltered {
 
 	private ArrayList<Infantry> infantryTeams;
+	private InfantryAdapter infantryAdapter;
+	
+	private int nationalityId;
+	private int campaignId;
 	
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -79,14 +84,14 @@ public class InfantryTeamListFragment extends ListFragment {
 		infantryTeams = new ArrayList<Infantry>();
 		
 		while (teams.moveToNext()) {
-			Infantry team = new Infantry();
-			team.setInfantryId(teams.getInt(0));
-			team.setDescription(teams.getString(1));
+			Infantry team = new Infantry(teams);
 			infantryTeams.add(team);
 		}
-		setListAdapter(new InfantryAdapter(getActivity(),
+		infantryAdapter = new InfantryAdapter(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
-				infantryTeams));
+				infantryTeams);
+		
+		setListAdapter(infantryAdapter);
 	}
 
 	@Override
@@ -129,7 +134,7 @@ public class InfantryTeamListFragment extends ListFragment {
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(infantryTeams.get(position).getInfantryId().toString());
+		mCallbacks.onItemSelected(infantryAdapter.getItem(position).getInfantryId().toString());
 	}
 
 	@Override
@@ -161,5 +166,40 @@ public class InfantryTeamListFragment extends ListFragment {
 		}
 
 		mActivatedPosition = position;
+	}
+	
+	@Override
+	public Integer getCampaignId() {
+		return campaignId;
+	}
+
+	@Override
+	public void setCampaignId(Integer campaignId) {
+		this.campaignId = campaignId;
+		refreshList(this.getCampaignId(), this.getNationalityId());
+	}
+
+	@Override
+	public Integer getNationalityId() {
+		return nationalityId;
+	}
+
+	@Override
+	public void setNationalityId(Integer nationalityId) {
+		this.nationalityId = nationalityId;
+		refreshList(this.getCampaignId(), this.getNationalityId());
+	}	
+	
+	private void refreshList(Integer campaignId, Integer nationalityId) {
+		if (campaignId != 0 && nationalityId != 0) {
+			infantryAdapter.clear();
+			DatabaseHelper dbh = new DatabaseHelper(this.getActivity());
+			Cursor teams = dbh.getInfantryForCampaignNationality(campaignId, nationalityId);
+			while (teams.moveToNext()) {
+				Infantry team = new Infantry(teams);
+				infantryAdapter.add(team);
+			}			
+			infantryAdapter.notifyDataSetChanged();
+		}
 	}
 }

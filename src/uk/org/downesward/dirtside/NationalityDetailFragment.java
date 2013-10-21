@@ -57,8 +57,8 @@ public class NationalityDetailFragment extends Fragment {
 
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
-			((TextView) rootView.findViewById(R.id.nationality_detail))
-					.setText(mItem.getDescription());
+			((TextView) rootView.findViewById(R.id.txtNationalityDescription))
+					.setText(mItem.getDescription());	
 		}
 
 		return rootView;

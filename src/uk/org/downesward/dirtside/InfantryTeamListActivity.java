@@ -1,7 +1,6 @@
 package uk.org.downesward.dirtside;
 
 import uk.org.downesward.dirtside.R;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -23,8 +22,10 @@ import android.support.v4.app.FragmentActivity;
  * selections.
  */
 public class InfantryTeamListActivity extends FragmentActivity implements
-		InfantryTeamListFragment.Callbacks {
+		InfantryTeamListFragment.Callbacks, CampaignNationalityFiltered {
 
+	private int nationalityId;
+	private int campaignId;
 	/**
 	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
 	 * device.
@@ -79,5 +80,25 @@ public class InfantryTeamListActivity extends FragmentActivity implements
 			detailIntent.putExtra(InfantryTeamDetailFragment.ARG_ITEM_ID, id);
 			startActivity(detailIntent);
 		}
+	}
+
+	@Override
+	public Integer getCampaignId() {
+		return campaignId;
+	}
+
+	@Override
+	public void setCampaignId(Integer campaignId) {
+		this.campaignId = campaignId;
+	}
+
+	@Override
+	public Integer getNationalityId() {
+		return nationalityId;
+	}
+
+	@Override
+	public void setNationalityId(Integer nationalityId) {
+		this.nationalityId = nationalityId;
 	}
 }

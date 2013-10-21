@@ -74,6 +74,15 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 						new String[] { infantryId.toString() });
 		return res;
 	}
+	
+	public Cursor getInfantryForCampaignNationality(Integer campaignId, Integer nationalityId) {
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor res = db
+				.rawQuery(
+						"SELECT InfantryId, Description FROM Infantry WHERE campaignId = ? AND nationality = ? ORDER BY Description",
+						new String[] { campaignId.toString(), nationalityId.toString() });
+		return res;
+	}	
 
 	public Cursor getECM() {
 		SQLiteDatabase db = getReadableDatabase();
