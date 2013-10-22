@@ -54,7 +54,7 @@ public class NationalityListFragment extends ListFragment implements Nationaliti
 		/**
 		 * Callback for when an item has been selected.
 		 */
-		public void onItemSelected(String id);
+		public void onItemSelected(String id, Integer campaignId);
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class NationalityListFragment extends ListFragment implements Nationaliti
 	 */
 	private static Callbacks sDummyCallbacks = new Callbacks() {
 		@Override
-		public void onItemSelected(String id) {
+		public void onItemSelected(String id, Integer campaignId) {
 		}
 	};
 
@@ -138,7 +138,7 @@ public class NationalityListFragment extends ListFragment implements Nationaliti
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(nationalityAdapter.getItem(position).getNationalityId().toString());
+		mCallbacks.onItemSelected(nationalityAdapter.getItem(position).getNationalityId().toString(), this.getCampaignId());
 	}
 
 	@Override

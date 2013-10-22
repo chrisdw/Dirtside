@@ -48,7 +48,7 @@ public class CampaignsActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 		Bundle b = new Bundle();
 		Campaign item = (Campaign) getListAdapter().getItem(position);
-		b.putInt("CampaignId", item.getCampaignId());
+		b.putInt(Constants.CAMPAIGN_ID, item.getCampaignId());
 		Intent intent = new Intent(CampaignsActivity.this,
 				NationalityListActivity.class);
 		intent.putExtras(b);

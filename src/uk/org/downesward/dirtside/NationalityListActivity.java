@@ -36,8 +36,8 @@ public class NationalityListActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_nationality_list);
 
 		Bundle b = getIntent().getExtras();
-		if (b != null && b.containsKey("CampaignId")) {
-			campaignId = b.getInt("CampaignId");
+		if (b != null && b.containsKey(Constants.CAMPAIGN_ID)) {
+			campaignId = b.getInt(Constants.CAMPAIGN_ID);
 		}
 		if (findViewById(R.id.nationality_detail_container) != null) {
 			// The detail container view will be present only in the
@@ -65,13 +65,14 @@ public class NationalityListActivity extends FragmentActivity implements
 	 * that the item with the given ID was selected.
 	 */
 	@Override
-	public void onItemSelected(String id) {
+	public void onItemSelected(String id, Integer campaignId) {
 		if (mTwoPane) {
 			// In two-pane mode, show the detail view in this activity by
 			// adding or replacing the detail fragment using a
 			// fragment transaction.
 			Bundle arguments = new Bundle();
 			arguments.putString(NationalityDetailFragment.ARG_ITEM_ID, id);
+			arguments.putInt(Constants.CAMPAIGN_ID, campaignId);
 			NationalityDetailFragment fragment = new NationalityDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
@@ -84,6 +85,7 @@ public class NationalityListActivity extends FragmentActivity implements
 			Intent detailIntent = new Intent(this,
 					NationalityDetailActivity.class);
 			detailIntent.putExtra(NationalityDetailFragment.ARG_ITEM_ID, id);
+			detailIntent.putExtra(Constants.CAMPAIGN_ID, campaignId);
 			startActivity(detailIntent);
 		}
 	}

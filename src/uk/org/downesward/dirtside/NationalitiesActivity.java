@@ -3,6 +3,8 @@ package uk.org.downesward.dirtside;
 import java.util.ArrayList;
 
 
+
+
 import uk.org.downesward.dirtside.adapters.NationalityAdapter;
 import uk.org.downesward.dirtside.domain.Nationality;
 import android.os.Bundle;
@@ -21,8 +23,8 @@ public class NationalitiesActivity extends ListActivity {
 		Bundle b = getIntent().getExtras();
 		DatabaseHelper dbh = new DatabaseHelper(this);
 		Cursor nationalities;
-		if (b != null && b.containsKey("CampaignId")) {
-			nationalities = dbh.getNationalitiesForCampaign(b.getInt("CampaignId"));
+		if (b != null && b.containsKey(Constants.CAMPAIGN_ID)) {
+			nationalities = dbh.getNationalitiesForCampaign(b.getInt(Constants.CAMPAIGN_ID));
 		} else {
 			nationalities = dbh.getNationalities();
 		}

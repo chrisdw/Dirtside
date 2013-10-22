@@ -13,5 +13,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="" />
+    
+    <fragment
+        android:id="@+id/national_infantryteam_list"
+        android:name="uk.org.downesward.dirtside.InfantryTeamListFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:layout="@android:layout/list_content" />
 
 </LinearLayout>

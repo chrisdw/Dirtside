@@ -26,6 +26,8 @@ public class NationalityDetailFragment extends Fragment {
 	 */
 	private Nationality mItem;
 
+	private int campaignId;
+
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
 	 * fragment (e.g. upon screen orientation changes).
@@ -47,6 +49,9 @@ public class NationalityDetailFragment extends Fragment {
 				mItem = inf;
 			}
 		}
+		if (getArguments().containsKey(Constants.CAMPAIGN_ID)) {
+			campaignId = getArguments().getInt(Constants.CAMPAIGN_ID);
+		}
 	}
 
 	@Override
@@ -58,7 +63,15 @@ public class NationalityDetailFragment extends Fragment {
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
 			((TextView) rootView.findViewById(R.id.txtNationalityDescription))
-					.setText(mItem.getDescription());	
+					.setText(mItem.getDescription());
+
+			// Grab the infantry list fragment
+			CampaignNationalityFiltered inf = (CampaignNationalityFiltered) this.getFragmentManager()
+					.findFragmentById(R.id.national_infantryteam_list);
+			if (inf != null) {
+				inf.setCampaignId(campaignId);
+				inf.setNationalityId(mItem.getNationalityId());
+			}
 		}
 
 		return rootView;

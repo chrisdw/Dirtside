@@ -15,7 +15,8 @@ import android.view.MenuItem;
  * This activity is mostly just a 'shell' activity containing nothing more than
  * a {@link NationalityDetailFragment}.
  */
-public class NationalityDetailActivity extends FragmentActivity {
+public class NationalityDetailActivity extends FragmentActivity implements
+		InfantryTeamListFragment.Callbacks {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,9 @@ public class NationalityDetailActivity extends FragmentActivity {
 					NationalityDetailFragment.ARG_ITEM_ID,
 					getIntent().getStringExtra(
 							NationalityDetailFragment.ARG_ITEM_ID));
+			arguments.putInt(
+					Constants.CAMPAIGN_ID,
+					getIntent().getIntExtra(Constants.CAMPAIGN_ID, 0));			
 			NationalityDetailFragment fragment = new NationalityDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()
@@ -65,5 +69,11 @@ public class NationalityDetailActivity extends FragmentActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onItemSelected(String id) {
+		// TODO Auto-generated method stub
+
 	}
 }
